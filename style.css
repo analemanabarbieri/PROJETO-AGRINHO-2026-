@@ -1,0 +1,337 @@
+/* ==========================================================================
+   VARIÁVEIS E CONFIGURAÇÕES INICIAIS (Tema Claro Padrão)
+   ========================================================================== */
+:root {
+    --cor-principal: #ffffff;      /* Fundo */
+    --cor-secundaria: #0071e3;     /* Azul Futurista Tecnológico */
+    --cor-fundo-card: #f5f5f7;    /* Cinza bem claro para os blocos */
+    --cor-texto: #1d1d1f;          /* Preto/Cinza Escuro */
+    --cor-botao: #0071e3;          /* Botão Azul */
+    --cor-botao-hover: #005bb5;
+    --borda-glow: transparent;
+    --transicao-suave: all 0.3s ease;
+}
+
+/* Alterações de variáveis para o MODO ESCURO (Pegada Cyber/Futurista) */
+body.dark-mode {
+    --cor-principal: #0b0f19;      /* Fundo Escuro Espacial */
+    --cor-secundaria: #00d2ff;     /* Azul Neon Brilhante */
+    --cor-fundo-card: #161f30;    /* Card Azul Escuro Metálico */
+    --cor-texto: #e2e8f0;          /* Texto Claro */
+    --cor-botao: #00d2ff;          /* Botão Neon */
+    --cor-botao-hover: #00a8cc;
+    --borda-glow: 0 0 15px rgba(0, 210, 255, 0.3);
+}
+
+/* RESET BÁSICO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth; /* Cria o efeito de rolagem suave */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--cor-principal);
+    color: var(--cor-texto);
+    transition: var(--transicao-suave);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   CABEÇALHO E MENU RESPONSIVO
+   ========================================================================== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--cor-principal);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    transition: var(--transicao-suave);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--cor-texto);
+}
+
+.logo span {
+    color: var(--cor-secundaria);
+}
+
+.navbar a {
+    color: var(--cor-texto);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: var(--transicao-suave);
+}
+
+.navbar a:hover {
+    color: var(--cor-secundaria);
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn-theme, .menu-toggle {
+    background-color: var(--cor-fundo-card);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-secundaria);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: var(--transicao-suave);
+}
+
+.btn-theme:hover {
+    box-shadow: var(--borda-glow);
+    background-color: var(--cor-secundaria);
+    color: #fff;
+}
+
+.menu-toggle {
+    display: none; /* Escondido no computador */
+    font-size: 1.2rem;
+}
+
+/* ==========================================================================
+   BANNER PRINCIPAL (HERO)
+   ========================================================================== */
+.banner {
+    height: 60vh;
+    /* Fundo degradê moderno simulando tecnologia/natureza */
+    background: linear-gradient(135deg, #0071e3 0%, #00bbf9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 0 20px;
+    margin-top: 70px; 
+}
+
+body.dark-mode .banner {
+    background: linear-gradient(135deg, #071426 0%, #005bb5 100%);
+}
+
+.banner-content h1 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+}
+
+.banner-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 25px auto;
+}
+
+.btn-hero {
+    display: inline-block;
+    background-color: #ffffff;
+    color: #0071e3;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: var(--transicao-suave);
+}
+
+.btn-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255,255,255,0.4);
+}
+
+/* ==========================================================================
+   LAYOUT E ELEMENTOS DE CONTEÚDO
+   ========================================================================== */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.section-card {
+    background-color: var(--cor-fundo-card);
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: var(--borda-glow);
+    transition: var(--transicao-suave);
+}
+
+.section-card h2 {
+    color: var(--cor-secundaria);
+    margin-bottom: 15px;
+}
+
+/* Grids e Listas */
+.grid-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.tech-item {
+    background: rgba(255,255,255,0.5);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid var(--cor-secundaria);
+}
+
+body.dark-mode .tech-item {
+    background: rgba(0,0,0,0.2);
+}
+
+.impacts-container p {
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--cor-texto);
+}
+
+.conclusion {
+    margin: 50px 0;
+}
+
+.motivational {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--cor-secundaria);
+    margin-top: 10px;
+}
+
+.text-center { text-align: center; }
+
+/* ==========================================================================
+   FORMULÁRIO DE CADASTRO FUTURISTA
+   ========================================================================== */
+.futuristic-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background-color: var(--cor-principal);
+    color: var(--cor-texto);
+    transition: var(--transicao-suave);
+}
+
+body.dark-mode .form-group input {
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--cor-secundaria);
+    box-shadow: var(--borda-glow);
+}
+
+.btn-submit {
+    background-color: var(--cor-botao);
+    color: #ffffff;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transicao-suave);
+}
+
+.btn-submit:hover {
+    background-color: var(--cor-botao-hover);
+    transform: translateY(-2px);
+}
+
+.form-feedback {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.form-feedback.success { background-color: #2e7d32; color: #fff; }
+.form-feedback.hidden { display: none; }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+    text-align: center;
+    padding: 30px;
+    background-color: var(--cor-fundo-card);
+    margin-top: 50px;
+    font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (MOBILE)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* Mostra o botão hamburguer no mobile */
+    }
+
+    .navbar {
+        display: none; /* Esconde o menu padrão lateralmente */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--cor-principal);
+        padding: 20px;
+        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Classe ativada por JS quando o botão hamburguer é clicado */
+    .navbar.active {
+        display: flex;
+    }
+
+    .navbar a {
+        margin: 10px 0;
+        font-size: 1.1rem;
+    }
+
+    .banner-content h1 { font-size: 2rem; }
+}

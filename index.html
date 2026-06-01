@@ -1,12 +1,124 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrinho 2026 - O Futuro é Agro</title>
     <link rel="stylesheet" href="style.css">
-    <title>Projeto agrinho 2026</title>
 </head>
 <body>
+
+    <header class="header">
+        <div class="logo">Agrinho <span>2026</span></div>
+        
+        <nav class="navbar" id="navbar">
+            <a href="#introducao">Introdução</a>
+            <a href="#sustentabilidade">Sustentabilidade</a>
+            <a href="#tecnologia">Tecnologia</a>
+            <a href="#impactos">Impactos</a>
+            <a href="#cadastro">Cadastro</a>
+        </nav>
+
+        <div class="header-actions">
+            <button id="theme-toggle" class="btn-theme" aria-label="Alternar tema">🌓 Modo</button>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">☰</button>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-content">
+            <h1>Agricultura, Tecnologia e Sustentabilidade</h1>
+            <p>Conectando a inovação digital com a preservação do planeta para alimentar o amanhã.</p>
+            <a href="#cadastro" class="btn-hero">Fazer Parte do Futuro</a>
+        </div>
+    </section>
+
+    <main class="container">
+        
+        <section id="introducao" class="section-card">
+            <h2>Cultivando o Amanhã: Agrinho 2026</h2>
+            <p>O Agrinho 2026 traz uma proposta revolucionária: unir o conhecimento tradicional do campo às mentes brilhantes da nova geração tecnológica. Nosso objetivo é mostrar como a tecnologia de ponta e as práticas sustentáveis caminham juntas para garantir a segurança alimentar global e proteger o meio ambiente.</p>
+        </section>
+
+        <section id="sustentabilidade" class="section-card">
+            <h2>Sustentabilidade no Campo</h2>
+            <p>Produzir mais com menos impacto é o lema da nossa era. A sustentabilidade no agro envolve:</p>
+            <ul class="grid-list">
+                <li><strong>Preservação Ambiental:</strong> Monitoramento e proteção de florestas nativas e matas ciliares.</li>
+                <li><strong>Uso Consciente da Água:</strong> Sistemas inteligentes de irrigação que evitam o desperdício.</li>
+                <li><strong>Energia Limpa:</strong> Fazendas movidas a energia solar e biomassa.</li>
+                <li><strong>Reciclagem no Campo:</strong> Destinação correta de embalagens e compostagem de resíduos orgânicos.</li>
+            </ul>
+        </section>
+
+        <section id="tecnologia" class="section-card">
+            <h2>Tecnologia e Alta Produção</h2>
+            <p>O campo se transformou em um verdadeiro laboratório de inovação futurista:</p>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h3>🛸 Drones</h3>
+                    <p>Mapeamento aéreo e aplicação precisa de insumos.</p>
+                </div>
+                <div class="tech-item">
+                    <h3>🌡️ Sensores IoT</h3>
+                    <p>Monitoram a umidade e os nutrientes do solo em tempo real.</p>
+                </div>
+                <div class="tech-item">
+                    <h3>🧠 Inteligência Artificial</h3>
+                    <p>Previsão climática assertiva e análise de dados para colheitas perfeitas.</p>
+                </div>
+                <div class="tech-item">
+                    <h3>🤖 Automação e Robótica</h3>
+                    <p>Tratores autônomos que otimizam o plantio dia e noite.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="impactos" class="section-card">
+            <h2>Impactos Reais e Positivos</h2>
+            <p>A união entre tecnologia e natureza gera benefícios para toda a sociedade:</p>
+            <div class="impacts-container">
+                <p><strong>Para os Produtores:</strong> Maior rentabilidade, segurança e tomada de decisões baseada em dados.</p>
+                <p><strong>Para as Cidades:</strong> Alimentos mais saudáveis, frescos e com preços mais estáveis nas mesas.</p>
+                <p><strong>Para o Meio Ambiente:</strong> Redução drástica da pegada de carbono e regeneração do solo.</p>
+                <p><strong>Para a Economia:</strong> Fortalecimento do mercado com exportações sustentáveis e geração de empregos verdes.</p>
+            </div>
+        </section>
+
+        <section id="cadastro" class="section-card form-section">
+            <h2>Conecte sua Propriedade ao Futuro</h2>
+            <p>Inscreva-se na rede Agrinho 2026 e receba dicas sobre tecnologias sustentáveis para o campo.</p>
+            
+            <form id="form-produtor" class="futuristic-form">
+                <div class="form-group">
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" required placeholder="Digite seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail Corporativo/Pessoal:</label>
+                    <input type="email" id="email" required placeholder="seuemail@agro.com">
+                </div>
+                <div class="form-group">
+                    <label for="propriedade">Nome da Propriedade (Opcional):</label>
+                    <input type="text" id="propriedade" placeholder="Ex: Fazenda Bela Vista">
+                </div>
+                <button type="submit" class="btn-submit">Cadastrar Propriedade</button>
+            </form>
+            <div id="form-feedback" class="form-feedback hidden"></div>
+        </section>
+
+        <section class="conclusion text-center">
+            <h2>O futuro está sendo plantado agora. Você está pronto para colher?</h2>
+            <p class="motivational">"A tecnologia nos dá as ferramentas, a sustentabilidade nos dá o caminho, e a agricultura nos dá a vida."</p>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Projeto Agrinho - Tecnologia e Sustentabilidade no Campo.</p>
+        <p>Desenvolvido para fins educacionais.</p>
+    </footer>
+
     <script src="main.js"></script>
 </body>
 </html>
