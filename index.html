@@ -3,136 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrinho 2026 - Conexão Futurista</title>
+    <title>Agrinho 2026 - O Futuro é Agro e Sustentável</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="bg-glow"></div>
-
     <header class="header">
-        <div class="logo">AGRINHO <span class="neon-text">2026</span></div>
-        
-        <nav class="navbar" id="navbar">
-            <a href="#introducao" class="nav-link">Introdução</a>
-            <a href="#sustentabilidade" class="nav-link">Sustentabilidade</a>
-            <a href="#tecnologia" class="nav-link">Tecnologia</a>
-            <a href="#impactos" class="nav-link">Impactos</a>
-            <a href="#cadastro" class="nav-link">Conectar</a>
+        <div class="logo">Agrinho <span>2026</span></div>
+        <nav class="nav">
+            <a href="#introducao">Introdução</a>
+            <a href="#sustentabilidade">Sustentabilidade</a>
+            <a href="#tecnologia">Tecnologia</a>
+            <a href="#impactos">Impactos</a>
+            <a href="#noticias">Notícias</a>
+            <a href="#ferramentas">Ferramentas</a>
         </nav>
-
-        <div class="header-actions">
-            <button id="theme-toggle" class="btn-theme" aria-label="Alternar tema">⚡ MODO</button>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">☰</button>
-        </div>
     </header>
 
     <section class="banner">
-        <div class="banner-overlay"></div>
-        <div class="banner-content animate-on-scroll">
-            <span class="badge">ECO-TECNOLOGIA DO AMANHÃ</span>
-            <h1>A Nova Era da <br><span class="gradient-text">Agricultura Sustentável</span></h1>
-            <p>A sinergia perfeita entre inteligência digital e preservação ecológica para alimentar o futuro do planeta.</p>
-            <a href="#cadastro" class="btn-hero">Iniciar Conexão</a>
+        <div class="carousel">
+            <div class="carousel-item active">
+                <div class="carousel-content">
+                    <h1>Agricultura do Amanhã</h1>
+                    <p>Como a tecnologia e a sustentabilidade transformam o campo em 2026.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-content">
+                    <h1>Inteligência Artificial no Campo</h1>
+                    <p>Otimizando colheitas e preservando recursos vitais do planeta.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-content">
+                    <h1>Conexão Verde</h1>
+                    <p>Sensores inteligentes moldando o futuro da produção de alimentos.</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <main class="container">
         
-        <section id="introducao" class="section-card glass-card animate-on-scroll">
-            <div class="card-accent"></div>
-            <h2>Cultivando a Bio-Revolução</h2>
-            <p>O <strong>Agrinho 2026</strong> redefine os limites do campo. Nossa missão é integrar sistemas autônomos, monitoramento inteligente e biologia aplicada para transformar o produtor rural em um gestor tecnológico de alta precisão, gerando abundância sem esgotar nossos recursos naturais.</p>
+        <section id="introducao" class="section card">
+            <h2>O que é o Agrinho 2026?</h2>
+            <p>O Agrinho 2026 convida estudantes e produtores a explorarem a sinergia entre inovação tecnológica, preservação ambiental e produção rural. Nosso objetivo é demonstrar que a tecnologia não afasta o homem da natureza, mas serve como a principal ferramenta para protegê-la enquanto alimentamos o mundo de forma inteligente.</p>
         </section>
 
-        <section id="sustentabilidade" class="section-card glass-card animate-on-scroll">
-            <div class="card-accent"></div>
-            <h2>Matriz Sustentável Inteligente</h2>
-            <p>A produção moderna exige o máximo de eficiência ambiental. Conheça os pilares dessa transformação:</p>
-            <div class="tech-grid">
-                <div class="tech-item">
-                    <span class="tech-icon">💧</span>
-                    <h3>Hidro-Otimização</h3>
-                    <p>Sistemas de gotejamento milimétrico controlados por IA eliminam 95% do desperdício de água.</p>
+        <section id="sustentabilidade" class="section">
+            <h2 class="section-title">Sustentabilidade no Agro</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Preservação Ambiental</h3>
+                    <p>Monitoramento via satélite para garantir o desmatamento zero e o mapeamento de áreas de preservação permanentes.</p>
                 </div>
-                <div class="tech-item">
-                    <span class="tech-icon">☀️</span>
-                    <h3>Matriz Bioenergética</h3>
-                    <p>Auto-suficiência energética total gerada por painéis solares bifaciais e biomassa regenerativa.</p>
+                <div class="card">
+                    <h3>Energia Limpa</h3>
+                    <p>Uso de painéis solares bifaciais e usinas de biomassa para mover o maquinário e irrigar as lavouras sem emitir carbono.</p>
+                </div>
+                <div class="card">
+                    <h3>Tecnologia no Campo</h3>
+                    <p>Sistemas digitais integrados que calculam a quantidade exata de água necessária, evitando desperdícios biológicos.</p>
                 </div>
             </div>
         </section>
 
-        <section id="tecnologia" class="section-card glass-card animate-on-scroll">
-            <div class="card-accent"></div>
-            <h2>O Ecossistema Digital</h2>
-            <p>O campo transformado em uma rede conectada de alta tecnologia:</p>
-            <div class="tech-grid">
-                <div class="tech-item">
-                    <span class="tech-icon">🛸</span>
-                    <h3>Drones de Varredura</h3>
-                    <p>Visão computacional e sensores térmicos que detectam anomalias na lavoura em segundos.</p>
+        <section id="tecnologia" class="section bg-light">
+            <h2 class="section-title">Tecnologia de Ponta</h2>
+            <div class="grid-3">
+                <div class="card border-blue">
+                    <h3>Sensores IoT</h3>
+                    <p>Dispositivos instalados no solo que enviam dados em tempo real sobre umidade, PH e nutrientes diretamente para a nuvem.</p>
                 </div>
-                <div class="tech-item">
-                    <span class="tech-icon">🧠</span>
-                    <h3>Redes de IA Preditiva</h3>
-                    <p>Algoritmos que analisam bilhões de dados climáticos para antecipar períodos ideais de colheita.</p>
+                <div class="card border-blue">
+                    <h3>Inteligência Artificial</h3>
+                    <p>Algoritmos que prevêem pragas e doenças antes que elas se espalhem, reduzindo drasticamente o uso de defensivos.</p>
                 </div>
-                <div class="tech-item">
-                    <span class="tech-icon">🤖</span>
-                    <h3>Frota Autônoma</h3>
-                    <p>Maquinários elétricos guiados por satélite que operam com precisão de centímetros.</p>
+                <div class="card border-blue">
+                    <h3>Robótica & Automação</h3>
+                    <p>Drones autônomos que realizam pulverização cirúrgica e tratores elétricos guiados por GPS de alta precisão.</p>
                 </div>
             </div>
         </section>
 
-        <section id="impactos" class="section-card glass-card animate-on-scroll">
-            <div class="card-accent"></div>
-            <h2>Resultados da Conexão</h2>
-            <div class="impacts-grid">
-                <div class="impact-box">
-                    <h4>Produtores</h4>
-                    <p>Decisões ultra-precisas com base em dados em tempo real.</p>
-                </div>
-                <div class="impact-box">
-                    <h4>Cidades</h4>
-                    <p>Cadeia de suprimentos limpa e rastreabilidade total do alimento.</p>
-                </div>
-                <div class="impact-box">
-                    <h4>Planeta</h4>
-                    <p>Recuperação ativa da biodiversidade e fixação de carbono no solo.</p>
-                </div>
+        <section id="noticias" class="section">
+            <h2 class="section-title">Painel de Inovações</h2>
+            <div class="filter-buttons">
+                <button class="btn-filter active" data-filter="todos">Todos</button>
+                <button class="btn-filter" data-filter="tech">Tecnologia</button>
+                <button class="btn-filter" data-filter="sustentavel">Sustentabilidade</button>
             </div>
+            <div class="grid-2" id="news-grid">
+                </div>
         </section>
 
-        <section id="cadastro" class="section-card glass-card form-section animate-on-scroll">
-            <div class="card-accent"></div>
-            <h2>Hub Agrinho 2026</h2>
-            <p>Registre sua propriedade ou escola para integrar nossa rede de inovação.</p>
+        <div id="ferramentas" class="grid-2 section">
             
-            <form id="form-produtor" class="futuristic-form">
+            <section class="card item-interativo">
+                <h3>Calculadora Agro-Ecológica</h3>
+                <p>Simule a economia de água gerada ao aplicar IA e sensores de solo na sua plantação.</p>
                 <div class="form-group">
-                    <label for="nome">Operador / Nome Completo</label>
-                    <input type="text" id="nome" required placeholder="Ex: Lucas Silva">
+                    <label for="hectares">Tamanho da Plantação (Hectares):</label>
+                    <input type="number" id="hectares" min="1" placeholder="Ex: 10">
                 </div>
-                <div class="form-group">
-                    <label for="email">E-mail de Acesso Digital</label>
-                    <input type="email" id="email" required placeholder="nome@agrotech.com">
-                </div>
-                <div class="form-group">
-                    <label for="propriedade">Identificação Geo/Propriedade</label>
-                    <input type="text" id="propriedade" placeholder="Ex: Agro-Polo Sul">
-                </div>
-                <button type="submit" class="btn-submit">Sincronizar Dados</button>
-            </form>
-            <div id="form-feedback" class="form-feedback hidden"></div>
+                <button onclick="calcularEconomia()" class="btn">Calcular Impacto</button>
+                <div id="resultado-calc" class="resultado"></div>
+            </section>
+
+            <section class="card item-interativo">
+                <h3>Conexão Produtor do Futuro</h3>
+                <p>Cadastre sua propriedade para receber dicas tecnológicas gratuitas do Agrinho.</p>
+                <form id="form-cadastro">
+                    <div class="form-group">
+                        <input type="text" id="nome" placeholder="Seu Nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Seu E-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="regiao" placeholder="Sua Região/Estado" required>
+                    </div>
+                    <button type="submit" class="btn">Enviar Cadastro</button>
+                </form>
+                <div id="mensagem-cadastro" class="resultado sucesso"></div>
+            </section>
+        </div>
+
+        <section id="impactos" class="section card text-center footer-cta">
+            <h2>Construindo o Amanhã, Hoje</h2>
+            <p>O impacto do Agro Futurista alcança a todos: garante lucros estáveis ao <strong>produtor</strong>, reduz o preço dos alimentos nas <strong>cidades</strong>, zera a pegada de carbono no <strong>meio ambiente</strong> e acelera a <strong>economia</strong> global.</p>
+            <blockquote class="citacao">
+                "A tecnologia é o adubo, a sustentabilidade é a semente, e o futuro é a colheita."
+            </blockquote>
         </section>
 
     </main>
 
     <footer class="footer">
-        <p class="neon-text">// AGRINHO 2026 _</p>
-        <p>A tecnologia a serviço da vida. Projeto Educacional.</p>
+        <p>&copy; 2026 Projeto Agrinho - Tecnologia, Agricultura e Sustentabilidade.</p>
+        <p>Desenvolvido para fins educativos - Estilo Futurista Clean.</p>
     </footer>
 
     <script src="main.js"></script>
