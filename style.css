@@ -1,29 +1,31 @@
 /* ==========================================================================
-   VARIÁVEIS E CONFIGURAÇÕES INICIAIS (Tema Claro Padrão)
+   VARIÁVEIS - DESIGN SISTEMA FUTURISTA CLARO / ESCURO
    ========================================================================== */
 :root {
-    --cor-principal: #ffffff;      /* Fundo */
-    --cor-secundaria: #0071e3;     /* Azul Futurista Tecnológico */
-    --cor-fundo-card: #f5f5f7;    /* Cinza bem claro para os blocos */
-    --cor-texto: #1d1d1f;          /* Preto/Cinza Escuro */
-    --cor-botao: #0071e3;          /* Botão Azul */
-    --cor-botao-hover: #005bb5;
-    --borda-glow: transparent;
-    --transicao-suave: all 0.3s ease;
+    --bg-global: #ffffff;
+    --bg-card: rgba(245, 245, 247, 0.7);
+    --texto: #111625;
+    --neon-blue: #0071e3;
+    --neon-glow: rgba(0, 113, 227, 0.2);
+    --card-border: rgba(0, 113, 227, 0.15);
+    --input-bg: #ffffff;
+    --gradiente-hero: linear-gradient(135deg, #005bb5 0%, #00bbf9 100%);
+    --filtro-vidro: blur(12px);
+    --transicao: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Alterações de variáveis para o MODO ESCURO (Pegada Cyber/Futurista) */
 body.dark-mode {
-    --cor-principal: #0b0f19;      /* Fundo Escuro Espacial */
-    --cor-secundaria: #00d2ff;     /* Azul Neon Brilhante */
-    --cor-fundo-card: #161f30;    /* Card Azul Escuro Metálico */
-    --cor-texto: #e2e8f0;          /* Texto Claro */
-    --cor-botao: #00d2ff;          /* Botão Neon */
-    --cor-botao-hover: #00a8cc;
-    --borda-glow: 0 0 15px rgba(0, 210, 255, 0.3);
+    --bg-global: #060913;
+    --bg-card: rgba(14, 22, 41, 0.6);
+    --texto: #f1f5f9;
+    --neon-blue: #00f0ff;
+    --neon-glow: rgba(0, 240, 255, 0.25);
+    --card-border: rgba(0, 240, 255, 0.2);
+    --input-bg: #0b1120;
+    --gradiente-hero: linear-gradient(135deg, #020813 0%, #0c2547 100%);
 }
 
-/* RESET BÁSICO */
+/* CONFIGURAÇÕES GERAIS */
 * {
     margin: 0;
     padding: 0;
@@ -31,307 +33,288 @@ body.dark-mode {
 }
 
 html {
-    scroll-behavior: smooth; /* Cria o efeito de rolagem suave */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-    background-color: var(--cor-principal);
-    color: var(--cor-texto);
-    transition: var(--transicao-suave);
-    line-height: 1.6;
+    background-color: var(--bg-global);
+    color: var(--texto);
+    transition: var(--transicao);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Brilho Sci-Fi no Fundo */
+.bg-glow {
+    position: fixed;
+    top: -10%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, var(--neon-glow) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
 }
 
 /* ==========================================================================
-   CABEÇALHO E MENU RESPONSIVO
+   CABEÇALHO GLASSMORPHISM
    ========================================================================== */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
+    padding: 15px 5%;
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: var(--cor-principal);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background: var(--bg-card);
+    backdrop-filter: var(--filtro-vidro);
+    -webkit-backdrop-filter: var(--filtro-vidro);
+    border-bottom: 1px solid var(--card-border);
     z-index: 1000;
-    transition: var(--transicao-suave);
+    transition: var(--transicao);
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--cor-texto);
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 1.3rem;
 }
 
-.logo span {
-    color: var(--cor-secundaria);
+.neon-text {
+    color: var(--neon-blue);
+    text-shadow: 0 0 10px var(--neon-glow);
 }
 
 .navbar a {
-    color: var(--cor-texto);
+    color: var(--texto);
     text-decoration: none;
-    margin-left: 20px;
+    margin-left: 25px;
+    font-size: 0.95rem;
     font-weight: 500;
-    transition: var(--transicao-suave);
+    position: relative;
+    transition: var(--transicao);
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--neon-blue);
+    transition: var(--transicao);
+}
+
+.navbar a:hover::after {
+    width: 100%;
 }
 
 .navbar a:hover {
-    color: var(--cor-secundaria);
-}
-
-.header-actions {
-    display: flex;
-    gap: 15px;
-    align-items: center;
+    color: var(--neon-blue);
 }
 
 .btn-theme, .menu-toggle {
-    background-color: var(--cor-fundo-card);
-    color: var(--cor-texto);
-    border: 1px solid var(--cor-secundaria);
-    padding: 8px 15px;
-    border-radius: 20px;
+    background: transparent;
+    color: var(--texto);
+    border: 1px solid var(--card-border);
+    padding: 8px 16px;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
-    transition: var(--transicao-suave);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: var(--transicao);
 }
 
 .btn-theme:hover {
-    box-shadow: var(--borda-glow);
-    background-color: var(--cor-secundaria);
-    color: #fff;
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-glow);
+    background: var(--neon-blue);
+    color: #000;
 }
 
-.menu-toggle {
-    display: none; /* Escondido no computador */
-    font-size: 1.2rem;
-}
+.menu-toggle { display: none; }
 
 /* ==========================================================================
-   BANNER PRINCIPAL (HERO)
+   HERO BANNER MODERNIZADO
    ========================================================================== */
 .banner {
-    height: 60vh;
-    /* Fundo degradê moderno simulando tecnologia/natureza */
-    background: linear-gradient(135deg, #0071e3 0%, #00bbf9 100%);
+    position: relative;
+    height: 80vh;
+    background: var(--gradiente-hero);
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #ffffff;
     padding: 0 20px;
-    margin-top: 70px; 
+    margin-top: 60px;
+    overflow: hidden;
 }
 
-body.dark-mode .banner {
-    background: linear-gradient(135deg, #071426 0%, #005bb5 100%);
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, var(--bg-global));
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    margin-bottom: 20px;
 }
 
 .banner-content h1 {
-    font-size: 2.8rem;
-    margin-bottom: 15px;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #fff, var(--neon-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .banner-content p {
     font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85);
     max-width: 600px;
-    margin: 0 auto 25px auto;
+    margin: 0 auto 35px auto;
 }
 
 .btn-hero {
     display: inline-block;
-    background-color: #ffffff;
-    color: #0071e3;
-    padding: 12px 30px;
-    border-radius: 25px;
+    background: #fff;
+    color: #002244;
+    padding: 14px 35px;
+    border-radius: 8px;
     text-decoration: none;
-    font-weight: bold;
-    transition: var(--transicao-suave);
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transition: var(--transicao);
 }
 
 .btn-hero:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(255,255,255,0.4);
+    box-shadow: 0 0 25px var(--neon-blue);
+    background: var(--neon-blue);
+    color: #000;
 }
 
 /* ==========================================================================
-   LAYOUT E ELEMENTOS DE CONTEÚDO
+   CARDS EM GLASSMORPHISM (EFEITO VIDRO)
    ========================================================================== */
 .container {
-    max-width: 1100px;
-    margin: 40px auto;
+    max-width: 1000px;
+    margin: -40px auto 60px auto;
     padding: 0 20px;
+    position: relative;
+    z-index: 5;
 }
 
-.section-card {
-    background-color: var(--cor-fundo-card);
-    padding: 30px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    box-shadow: var(--borda-glow);
-    transition: var(--transicao-suave);
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: var(--filtro-vidro);
+    -webkit-backdrop-filter: var(--filtro-vidro);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 45px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: var(--transicao);
 }
 
-.section-card h2 {
-    color: var(--cor-secundaria);
-    margin-bottom: 15px;
+.glass-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--neon-blue);
+    box-shadow: 0 15px 35px var(--neon-glow);
 }
 
-/* Grids e Listas */
-.grid-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
+.card-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: var(--neon-blue);
 }
 
+.glass-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* TECH GRID */
 .tech-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
 }
 
 .tech-item {
-    background: rgba(255,255,255,0.5);
-    padding: 20px;
-    border-radius: 10px;
-    border-left: 4px solid var(--cor-secundaria);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(128, 128, 128, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    transition: var(--transicao);
 }
 
-body.dark-mode .tech-item {
-    background: rgba(0,0,0,0.2);
+.tech-item:hover {
+    background: rgba(0, 113, 227, 0.05);
+    border-color: var(--neon-blue);
 }
 
-.impacts-container p {
+body.dark-mode .tech-item:hover {
+    background: rgba(0, 240, 255, 0.04);
+}
+
+.tech-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.tech-item h3 {
     margin-bottom: 10px;
-    padding-left: 10px;
-    border-left: 2px solid var(--cor-texto);
-}
-
-.conclusion {
-    margin: 50px 0;
-}
-
-.motivational {
-    font-style: italic;
     font-size: 1.2rem;
-    color: var(--cor-secundaria);
-    margin-top: 10px;
 }
 
-.text-center { text-align: center; }
-
-/* ==========================================================================
-   FORMULÁRIO DE CADASTRO FUTURISTA
-   ========================================================================== */
-.futuristic-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
+/* IMPACTS GRID */
+.impacts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.impact-box {
+    border-left: 3px solid var(--neon-blue);
+    padding-left: 20px;
 }
 
-.form-group label {
-    font-weight: 500;
-}
-
-.form-group input {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(0,0,0,0.1);
-    background-color: var(--cor-principal);
-    color: var(--cor-texto);
-    transition: var(--transicao-suave);
-}
-
-body.dark-mode .form-group input {
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: var(--cor-secundaria);
-    box-shadow: var(--borda-glow);
-}
-
-.btn-submit {
-    background-color: var(--cor-botao);
-    color: #ffffff;
-    padding: 14px;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: var(--transicao-suave);
-}
-
-.btn-submit:hover {
-    background-color: var(--cor-botao-hover);
-    transform: translateY(-2px);
-}
-
-.form-feedback {
-    margin-top: 15px;
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.form-feedback.success { background-color: #2e7d32; color: #fff; }
-.form-feedback.hidden { display: none; }
-
-/* ==========================================================================
-   FOOTER
-   ========================================================================== */
-.footer {
-    text-align: center;
-    padding: 30px;
-    background-color: var(--cor-fundo-card);
-    margin-top: 50px;
-    font-size: 0.9rem;
-}
-
-/* ==========================================================================
-   RESPONSIVIDADE (MOBILE)
-   ========================================================================== */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block; /* Mostra o botão hamburguer no mobile */
-    }
-
-    .navbar {
-        display: none; /* Esconde o menu padrão lateralmente */
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: var(--cor-principal);
-        padding: 20px;
-        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
-    }
-
-    /* Classe ativada por JS quando o botão hamburguer é clicado */
-    .navbar.active {
-        display: flex;
-    }
-
-    .navbar a {
-        margin: 10px 0;
-        font-size: 1.1rem;
-    }
-
-    .banner-content h1 { font-size: 2rem; }
-}
+.impact-box h4 {
+    font-size: 1.1rem;
+    margin
