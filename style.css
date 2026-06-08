@@ -1,294 +1,67 @@
-/* Definição das Variáveis CSS - Facilita alterações globais */
+/* Definição das Variáveis CSS - Padrão (Modo Claro / Futurista Branco e Azul) */
 :root {
-    --cor-principal: #ffffff;    /* Fundo geral e blocos limpos */
-    --cor-secundaria: #0066ff;   /* Azul Futurista/Tecnológico */
-    --cor-fundo: #f4f7fa;        /* Fundo suave para contraste */
-    --cor-texto: #111111;        /* Texto escuro de alta legibilidade */
-    --cor-botao: #0052cc;        /* Azul um pouco mais forte para botões */
+    --cor-principal: #ffffff;    
+    --cor-secundaria: #0066ff;   
+    --cor-fundo: #f4f7fa;        
+    --cor-texto: #111111;        
+    --cor-botao: #0052cc;        
     --cor-card: #ffffff;
     --borda-raio: 12px;
     --transicao: all 0.3s ease;
+    --fonte-padrao: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Reset básico de layout */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* ==========================================================================
+   CLASSES DE ACESSIBILIDADE (Modificam as variáveis globais)
+   ========================================================================== */
+
+/* 1. MODO ESCURO */
+body.dark-mode {
+    --cor-principal: #1a1a1a;
+    --cor-secundaria: #3385ff;
+    --cor-fundo: #121212;
+    --cor-texto: #ffffff;
+    --cor-botao: #0066ff;
+    --cor-card: #1e1e1e;
+}
+body.dark-mode .header { background-color: rgba(26, 26, 26, 0.95); }
+body.dark-mode input { background-color: #2a2a2a; color: white; border-color: #444; }
+body.dark-mode .btn-filter { background-color: #2a2a2a; color: var(--cor-secundaria); }
+
+/* 2. ALTO CONTRASTE */
+body.alto-contraste {
+    --cor-principal: #000000;
+    --cor-secundaria: #ffff00; /* Amarelo de alto contraste */
+    --cor-fundo: #000000;
+    --cor-texto: #ffffff;
+    --cor-botao: #ffff00;
+    --cor-card: #000000;
+}
+body.alto-contraste * {
+    border-color: #ffff00 !important;
+    color: #ffffff !important;
+}
+body.alto-contraste .logo span, 
+body.alto-contraste a:hover, 
+body.alto-contraste h1, 
+body.alto-contraste h2, 
+body.alto-contraste h3,
+body.alto-contraste .citacao {
+    color: #ffff00 !important;
+}
+body.alto-contraste .btn, 
+body.alto-contraste .btn-filter.active,
+body.alto-contraste .btn-acessibilidade-toggle {
+    background-color: #ffff00 !important;
+    color: #000000 !important;
+    font-weight: bold;
 }
 
-html {
-    scroll-behavior: smooth; /* Rolagem suave de página */
+/* 3. FONTE PARA DISLEXIA */
+body.fonte-dislexia {
+    /* Comic Sans ou Verdana possuem excelente espaçamento de base para dislexia se a OpenDyslexic não estiver instalada */
+    --fonte-padrao: 'Comic Sans MS', 'Verdana', sans-serif;
 }
-
-body {
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.6;
-}
-
-/* Cabeçalho e Menu */
-.header {
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 2px solid var(--cor-secundaria);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 5%;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-.logo {
-    font-size: 1.6rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.logo span {
-    color: var(--cor-secundaria);
-}
-
-.nav a {
-    color: var(--cor-texto);
-    text-decoration: none;
-    margin-left: 1.5rem;
-    font-weight: 600;
-    transition: var(--transicao);
-}
-
-.nav a:hover {
-    color: var(--cor-secundaria);
-}
-
-/* Banner Principal e Carrossel */
-.banner {
-    position: relative;
-    height: 450px;
-    background: #000;
-    overflow: hidden;
-    color: #fff;
-}
-
-.carousel {
-    height: 100%;
-    width: 100%;
-    position: relative;
-}
-
-.carousel-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    /* Imagens conceituais via CSS (Gradientes futuristas abstratos azulados) */
-    background-image: linear-gradient(135deg, rgba(0,102,255,0.7) 0%, rgba(0,0,0,0.8) 100%);
-}
-
-.carousel-item:nth-child(2) {
-    background-image: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,82,204,0.7) 100%);
-}
-
-.carousel-item:nth-child(3) {
-    background-image: linear-gradient(135deg, rgba(17,17,17,0.85) 0%, rgba(0,102,255,0.5) 100%);
-}
-
-.carousel-item.active {
-    opacity: 1;
-    z-index: 1;
-}
-
-.carousel-content {
-    text-align: center;
-    max-width: 800px;
-    padding: 0 20px;
-}
-
-.carousel-content h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-
-/* Estrutura de Grid e Containers */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 5%;
-}
-
-.section {
-    padding: 3rem 0;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    position: relative;
-}
-
-.section-title::after {
-    content: '';
-    display: block;
-    width: 50px;
-    height: 4px;
-    background-color: var(--cor-secundaria);
-    margin: 10px auto 0;
-    border-radius: 2px;
-}
-
-/* Grids Responsivos */
-.grid-2 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-}
-
-/* Estilização de Cartões (Cards) */
-.card {
-    background-color: var(--cor-card);
-    padding: 2.5rem;
-    border-radius: var(--borda-raio);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    transition: var(--transicao);
-    border: 1px solid rgba(0,0,0,0.05);
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 102, 255, 0.1);
-}
-
-.border-blue {
-    border-left: 5px solid var(--cor-secundaria);
-}
-
-/* Botões Modernos */
-.btn {
-    background-color: var(--cor-botao);
-    color: white;
-    border: none;
-    padding: 0.8rem 1.8rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: var(--borda-raio);
-    cursor: pointer;
-    transition: var(--transicao);
-    width: 100%;
-}
-
-.btn:hover {
-    background-color: var(--cor-secundaria);
-    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
-}
-
-/* Filtros de Notícias */
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.btn-filter {
-    background: white;
-    border: 2px solid var(--cor-secundaria);
-    color: var(--cor-secundaria);
-    padding: 0.5rem 1.5rem;
-    font-weight: 600;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: var(--transicao);
-}
-
-.btn-filter.active, .btn-filter:hover {
-    background-color: var(--cor-secundaria);
-    color: white;
-}
-
-/* Formulários e Inputs */
-.form-group {
-    margin-bottom: 1.2rem;
-}
-
-input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 2px solid #e0e0e0;
-    border-radius: var(--borda-raio);
-    outline: none;
-    transition: var(--transicao);
-}
-
-input:focus {
-    border-color: var(--cor-secundaria);
-}
-
-/* Exibições de Resultados via JS */
-.resultado {
-    margin-top: 1rem;
-    padding: 1rem;
-    border-radius: var(--borda-raio);
-    font-weight: 600;
-    display: none;
-}
-
-.sucesso {
-    background-color: #e6f4ea;
-    color: #137333;
-    border-left: 4px solid #137333;
-}
-
-.info {
-    background-color: #e8f0fe;
-    color: #1a73e8;
-    border-left: 4px solid #1a73e8;
-}
-
-/* Outros Componentes */
-.text-center { text-align: center; }
-.bg-light { background-color: rgba(0,102,255,0.02); padding: 4rem 2rem; border-radius: var(--borda-raio);}
-
-.citacao {
-    font-style: italic;
-    font-size: 1.3rem;
-    color: var(--cor-secundaria);
-    margin-top: 1.5rem;
-}
-
-/* Rodapé */
-.footer {
-    background-color: #111;
-    color: #888;
-    text-align: center;
-    padding: 2rem;
-    margin-top: 4rem;
-    font-size: 0.9rem;
-}
-
-/* Responsividade Básica (Celulares) */
-@media (max-width: 768px) {
-    .header { flex-direction: column; gap: 1rem; }
-    .nav a { margin: 0 0.5rem; }
-    .carousel-content h1 { font-size: 2rem; }
-}
+body.fonte-dislexia * {
+    font-family: var(--fonte-padrao) !important;
+    letter-spacing: 0.05em !important; /*

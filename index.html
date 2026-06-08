@@ -8,9 +8,18 @@
 </head>
 <body>
 
+    <div class="painel-acessibilidade" id="painel-acessibilidade">
+        <button class="btn-acessibilidade-toggle" id="btn-painel-toggle" aria-label="Abrir opções de acessibilidade">♿ Acessibilidade</button>
+        <div class="painel-opcoes" id="painel-opcoes" aria-hidden="true">
+            <button onclick="toggleModoEscuro()" class="btn-opcao">Modo Escuro</button>
+            <button onclick="toggleAltoContraste()" class="btn-opcao">Alto Contraste</button>
+            <button onclick="toggleDislexia()" class="btn-opcao">Fonte p/ Dislexia</button>
+        </div>
+    </div>
+
     <header class="header">
         <div class="logo">Agrinho <span>2026</span></div>
-        <nav class="nav">
+        <nav class="nav" aria-label="Navegação Principal">
             <a href="#introducao">Introdução</a>
             <a href="#sustentabilidade">Sustentabilidade</a>
             <a href="#tecnologia">Tecnologia</a>
@@ -20,7 +29,7 @@
         </nav>
     </header>
 
-    <section class="banner">
+    <section class="banner" aria-label="Destaques do projeto">
         <div class="carousel">
             <div class="carousel-item active">
                 <div class="carousel-content">
@@ -115,12 +124,15 @@
                 <p>Cadastre sua propriedade para receber dicas tecnológicas gratuitas do Agrinho.</p>
                 <form id="form-cadastro">
                     <div class="form-group">
+                        <label for="nome" class="sr-only">Seu Nome completo</label>
                         <input type="text" id="nome" placeholder="Seu Nome completo" required>
                     </div>
                     <div class="form-group">
+                        <label for="email" class="sr-only">Seu E-mail</label>
                         <input type="email" id="email" placeholder="Seu E-mail" required>
                     </div>
                     <div class="form-group">
+                        <label for="regiao" class="sr-only">Sua Região/Estado</label>
                         <input type="text" id="regiao" placeholder="Sua Região/Estado" required>
                     </div>
                     <button type="submit" class="btn">Enviar Cadastro</button>
@@ -141,7 +153,7 @@
 
     <footer class="footer">
         <p>&copy; 2026 Projeto Agrinho - Tecnologia, Agricultura e Sustentabilidade.</p>
-        <p>Desenvolvido para fins educativos - Estilo Futurista Clean.</p>
+        <p>Desenvolvido para fins educativos - Acessibilidade Integrada.</p>
     </footer>
 
     <script src="main.js"></script>
