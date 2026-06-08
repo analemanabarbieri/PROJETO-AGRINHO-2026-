@@ -1,348 +1,146 @@
-/**
- * ARQUIVO: main.js
- * PROJETO: Agrinho 2026 - Tecnologia, Agricultura e Sustentabilidade
- * DESCRIÇÃO: Script para controle de interatividades, acessibilidade e dinamismo do site.
- */
-
-// Aguarda o carregamento completo do DOM antes de executar o script
+// Aguarda o documento HTML carregar completamente
 document.addEventListener("DOMContentLoaded", () => {
-    initAcessibilidade();
-    initModoEscuro();
-    initCarrossel();
-    initCalculadora();
-    initCadastro();
-    initNoticias();
-    initChatbot();
-    initScrollSuave();
+    inicializarCarrossel();
+    renderizarNoticias("todos");
+    configurarFiltrosNoticias();
+    configurarFormularioCadastro();
 });
 
 /* ==========================================================================
-   1. RECURSOS DE ACESSIBILIDADE
+   OPÇÃO 2: CARROSSEL AUTOMÁTICO DO BANNER
    ========================================================================== */
-function initAcessibilidade() {
-    const btnContraste = document.getElementById("btn-alto-contraste");
-    const btnDislexia = document.getElementById("btn-dislexia");
-    const btnAumentarTexto = document.getElementById("btn-aumentar-texto");
-    const btnDiminuirTexto = document.getElementById("btn-diminuir-texto");
-    
-    let tamanhoFonteAtual = 100; // Representa 100% (16px padrão)
-
-    // Alto Contraste
-    if (btnContraste) {
-        btnContraste.addEventListener("click", () => {
-            document.body.classList.toggle("alto-contraste");
-            // Salva a preferência do usuário no navegador
-            const status = document.body.classList.contains("alto-contraste");
-            localStorage.setItem("altoContraste", status);
-        });
-        // Recupera preferência salva
-        if (localStorage.getItem("altoContraste") === "true") {
-            document.body.classList.add("alto-contraste");
-        }
-    }
-
-    // Fonte para Dislexia
-    if (btnDislexia) {
-        btnDislexia.addEventListener("click", () => {
-            document.body.classList.toggle("fonte-dislexia");
-            const status = document.body.classList.contains("fonte-dislexia");
-            localStorage.setItem("fonteDislexia", status);
-        });
-        // Recupera preferência salva
-        if (localStorage.getItem("fonteDislexia") === "true") {
-            document.body.classList.add("fonte-dislexia");
-        }
-    }
-
-    // Controle de Tamanho do Texto
-    if (btnAumentarTexto && btnDiminuirTexto) {
-        btnAumentarTexto.addEventListener("click", () => {
-            if (tamanhoFonteAtual < 130) { // Limite máximo de 130%
-                tamanhoFonteAtual += 10;
-                document.documentElement.style.fontSize = `${tamanhoFonteAtual}%`;
-            }
-        });
-
-        btnDiminuirTexto.addEventListener("click", () => {
-            if (tamanhoFonteAtual > 80) { // Limite mínimo de 80%
-                tamanhoFonteAtual -= 10;
-                document.documentElement.style.fontSize = `${tamanhoFonteAtual}%`;
-            }
-        });
-    }
-}
-
-/* ==========================================================================
-   2. MODO CLARO / ESCURO
-   ========================================================================== */
-function initModoEscuro() {
-    const btnModo = document.getElementById("btn-modo-escuro");
-    
-    if (btnModo) {
-        btnModo.addEventListener("click", () => {
-            document.body.classList.toggle("modo-escuro");
-            const status = document.body.classList.contains("modo-escuro");
-            localStorage.setItem("modoEscuro", status);
-            // Atualiza o ícone/texto do botão se necessário
-            btnModo.textContent = status ? "☀️ Modo Claro" : "🌙 Modo Escuro";
-        });
-
-        // Recupera preferência salva
-        if (localStorage.getItem("modoEscuro") === "true") {
-            document.body.classList.add("modo-escuro");
-            btnModo.textContent = "☀️ Modo Claro";
-        }
-    }
-}
-
-/* ==========================================================================
-   3. CARROSSEL AUTOMÁTICO
-   ========================================================================== */
-function initCarrossel() {
-    const slides = document.querySelectorAll(".carrossel-item");
-    if (slides.length === 0) return;
-
+function inicializarCarrossel() {
+    const slides = document.querySelectorAll(".carousel-item");
     let slideAtual = 0;
-    const tempoTroca = 4000; // 4 segundos
 
-    function mostrarSlide(indice) {
-        slides.forEach(slide => slide.classList.remove("ativo"));
-        slides[indice].classList.add("ativo");
-    }
-
+    // Função que muda o slide ativo
     function proximoSlide() {
-        slideAtual = (slideAtual + 1) % slides.length;
-        mostrarSlide(slideAtual);
+        slides[slideAtual].classList.remove("active");
+        slideAtual = (slideAtual + 1) % slides.length; // Retorna ao 0 quando chega ao fim
+        slides[slideAtual].classList.add("active");
     }
 
-    // Inicia o ciclo automático
-    let intervaloCarrossel = setInterval(proximoSlide, tempoTroca);
-
-    // Pausa o carrossel se o usuário passar o mouse por cima
-    const containerCarrossel = document.querySelector(".carrossel-container");
-    if (containerCarrossel) {
-        containerCarrossel.addEventListener("mouseenter", () => clearInterval(intervaloCarrossel));
-        containerCarrossel.addEventListener("mouseleave", () => {
-            intervaloCarrossel = setInterval(proximoSlide, tempoTroca);
-        });
-    }
+    // Configura a troca automática a cada 4 segundos (4000ms)
+    setInterval(proximoSlide, 4000);
 }
 
 /* ==========================================================================
-   4. CALCULADORA ECOLÓGICA
+   OPÇÃO 5: ÁREA DE NOTÍCIAS DINÂMICA (Dados e Filtragem)
    ========================================================================== */
-function initCalculadora() {
-    const btnCalcular = document.getElementById("btn-calcular");
-    
-    if (btnCalcular) {
-        btnCalcular.addEventListener("click", () => {
-            const hectares = parseFloat(document.getElementById("input-hectares").value);
-            const tecnologia = document.getElementById("select-tecnologia").value;
-            const painelResultado = document.getElementById("resultado-calculadora");
-
-            if (isNaN(hectares) || hectares <= 0) {
-                painelResultado.innerHTML = "<p style='color: red;'>Por favor, insira uma quantidade válida de hectares.</p>";
-                return;
-            }
-
-            let economiaAguaPorHectare = 0;
-            let reducaoCO2PorHectare = 0;
-            let recursoPolpado = "";
-
-            // Lógica baseada na tecnologia selecionada
-            switch (tecnologia) {
-                case "sensores":
-                    economiaAguaPorHectare = 1500; // Litros economizados por mês
-                    reducaoCO2PorHectare = 12;      // kg de CO2 evitados por mês
-                    recursoPolpado = "Água via Irrigação Inteligente";
-                    break;
-                case "ia":
-                    economiaAguaPorHectare = 800;
-                    reducaoCO2PorHectare = 35; // Alta redução por otimizar maquinário
-                    recursoPolpado = "Defensivos Agrícolas e Combustível";
-                    break;
-                case "drones":
-                    economiaAguaPorHectare = 400;
-                    reducaoCO2PorHectare = 25;
-                    recursoPolpado = "Combustível Fóssil e Insumos";
-                    break;
-                default:
-                    economiaAguaPorHectare = 0;
-                    reducaoCO2PorHectare = 0;
-            }
-
-            // Cálculo total
-            const totalAgua = (economiaAguaPorHectare * hectares).toLocaleString("pt-BR");
-            const totalCO2 = (reducaoCO2PorHectare * hectares).toLocaleString("pt-BR");
-
-            // Exibição do resultado estilizado
-            painelResultado.innerHTML = `
-                <div class="resultado-box animate-fade">
-                    <h4>Impacto Estimado Mensal:</h4>
-                    <p>💧 <strong>${totalAgua} litros</strong> de água preservados.</p>
-                    <p>🌱 <strong>${totalCO2} kg</strong> de CO₂ evitados na atmosfera.</p>
-                    <p><small>Foco de otimização: Hectares monitorados com ${recursoPolpado}.</small></p>
-                </div>
-            `;
-        });
+// Banco de dados fictício simulando notícias do setor
+const bancoNoticias = [
+    {
+        titulo: "Drones e IA reduzem em até 40% desperdício de água no Sul",
+        categoria: "tech",
+        descricao: "Novas fazendas verticais utilizam IA de ponta para controlar o gotejamento preciso e inteligente."
+    },
+    {
+        titulo: "Paraná lidera transição para tratores 100% Elétricos",
+        categoria: "sustentavel",
+        descricao: "Maquinários movidos a energia solar gerada na própria propriedade começam a ser distribuídos."
+    },
+    {
+        titulo: "Agrinho 2026 bate recorde de projetos tecnológicos",
+        categoria: "tech",
+        descricao: "Estudantes apresentam soluções incríveis combinando robótica de baixo custo e sensores de solo."
+    },
+    {
+        titulo: "Uso de biofertilizantes cresce e regenera solos antigos",
+        categoria: "sustentavel",
+        descricao: "Alternativas sustentáveis substituem químicos agressivos e geram créditos de carbono valiosos."
     }
+];
+
+// Função que cria os elementos HTML das notícias na tela
+function renderizarNoticias(filtro) {
+    const gridNoticias = document.getElementById("news-grid");
+    gridNoticias.innerHTML = ""; // Limpa a área antes de renderizar
+
+    // Filtra os dados com base na escolha do usuário
+    const noticiasFiltradas = bancoNoticias.filter(noticia => filtro === "todos" || noticia.categoria === filtro);
+
+    noticiasFiltradas.forEach(noticia => {
+        const cardNoticia = document.createElement("div");
+        cardNoticia.className = "card border-blue";
+        cardNoticia.innerHTML = `
+            <span class="badge" style="color: var(--cor-secundaria); font-weight: bold; text-transform: uppercase; font-size: 0.8rem;">
+                [ ${noticia.categoria === 'tech' ? 'Tecnologia' : 'Sustentabilidade'} ]
+            </span>
+            <h4 style="margin: 0.5rem 0; font-size: 1.2rem;">${noticia.titulo}</h4>
+            <p style="font-size: 0.95rem; color: #555;">${noticia.descricao}</p>
+        `;
+        gridNoticias.appendChild(cardNoticia);
+    });
 }
 
-/* ==========================================================================
-   5. CADASTRO DE PRODUTOR RURAL (VALIDAÇÃO)
-   ========================================================================== */
-function initCadastro() {
-    const formCadastro = document.getElementById("form-produtor");
-    
-    if (formCadastro) {
-        formCadastro.addEventListener("submit", (evento) => {
-            evento.preventDefault(); // Evita o recarregamento da página
-
-            const nome = document.getElementById("cad-nome").value.trim();
-            const email = document.getElementById("cad-email").value.trim();
-            const estado = document.getElementById("cad-estado").value;
-            const mensagemFeedback = document.getElementById("cadastro-feedback");
-
-            // Validação simples de preenchimento
-            if (nome === "" || email === "" || estado === "") {
-                mensagemFeedback.innerHTML = "<p style='color: red;'>Por favor, preencha todos os campos obrigatórios.</p>";
-                return;
-            }
-
-            // Simulação de envio com sucesso
-            mensagemFeedback.innerHTML = `
-                <p style='color: green; font-weight: bold;'>
-                    ✨ Cadastro realizado com sucesso, ${nome}! Bem-vindo à rede do Agrinho 2026.
-                </p>
-            `;
+// Configura o clique nos botões de filtro
+function configurarFiltrosNoticias() {
+    const botoes = document.querySelectorAll(".btn-filter");
+    botoes.forEach(botao => {
+        botao.addEventListener("click", (e) => {
+            // Remove classe ativa de todos
+            botoes.forEach(b => b.classList.remove("active"));
+            // Adiciona classe ativa no clicado
+            e.target.classList.add("active");
             
-            formCadastro.reset(); // Limpa os campos do formulário
+            // Filtra e exibe as notícias correspondentes
+            const categoriaFiltro = e.target.getAttribute("data-filter");
+            renderizarNoticias(categoriaFiltro);
         });
-    }
+    });
 }
 
 /* ==========================================================================
-   6. ÁREA DE NOTÍCIAS DINÂMICA
+   OPÇÃO 3: CALCULADORA ECOLÓGICA SIMPLES
    ========================================================================== */
-function initNoticias() {
-    const btnCarregarNoticias = document.getElementById("btn-mais-noticias");
-    const containerNoticias = document.getElementById("container-noticias-extras");
+function calcularEconomia() {
+    const inputHectares = document.getElementById("hectares");
+    const containerResultado = document.getElementById("resultado-calc");
+    const hectares = parseFloat(inputHectares.value);
 
-    // Banco de dados fictício de notícias extras
-    const noticiasExtras = [
-        {
-            titulo: "Sensores IoT reduzem consumo de água em 40% no Paraná",
-            resumo: "Propriedades pioneiras demonstram como a telemetria em tempo real evita o desperdício de recursos hídricos.",
-            data: "05/06/2026"
-        },
-        {
-            titulo: "Robótica de campo ganha espaço na colheita seletiva",
-            resumo: "Novos braços mecânicos integrados com visão computacional conseguem colher apenas frutos perfeitamente maduros.",
-            data: "28/05/2026"
-        }
-    ];
-
-    if (btnCarregarNoticias && containerNoticias) {
-        btnCarregarNoticias.addEventListener("click", () => {
-            // Evita carregar duplicado se já foi clicado
-            if (containerNoticias.children.length > 0) {
-                btnCarregarNoticias.textContent = "Todas as notícias carregadas";
-                btnCarregarNoticias.disabled = true;
-                return;
-            }
-
-            noticiasExtras.forEach(noticia => {
-                const card = document.createElement("div");
-                card.className = "noticia-card extra animate-fade";
-                card.innerHTML = `
-                    <span class="noticia-data">${noticia.data}</span>
-                    <h3>${noticia.titulo}</h3>
-                    <p>${noticia.resumo}</p>
-                `;
-                containerNoticias.appendChild(card);
-            });
-
-            btnCarregarNoticias.textContent = "Mostrando tudo";
-            btnCarregarNoticias.disabled = true;
-        });
+    // Validação se o número inserido é válido
+    if (isNaN(hectares) || hectares <= 0) {
+        containerResultado.className = "resultado erro";
+        containerResultado.style.backgroundColor = "#fce8e6";
+        containerResultado.style.color = "#c5221f";
+        containerResultado.style.borderLeft = "4px solid #c5221f";
+        containerResultado.innerHTML = "Por favor, insira um número válido de hectares.";
+        containerResultado.style.display = "block";
+        return;
     }
+
+    // Lógica matemática fictícia baseada em economia média real por IA no campo
+    const litrosEconomizadosPorDia = hectares * 1500; 
+    const reducaoCarbonoKg = hectares * 12;
+
+    containerResultado.className = "resultado info";
+    containerResultado.style.display = "block";
+    containerResultado.innerHTML = `
+        <p><strong>Resultado da sua Automação:</strong></p>
+        <p>💧 Economia Estimada de Água: <strong>${litrosEconomizadosPorDia.toLocaleString('pt-BR')} litros</strong> por dia.</p>
+        <p>🌱 Redução de Carbono: <strong>${reducaoCarbonoKg.toLocaleString('pt-BR')} kg de CO₂</strong> evitados por safra.</p>
+    `;
 }
 
 /* ==========================================================================
-   7. CHAT SIMPLES (SIMULADOR DE IA DO AGRO)
+   OPÇÃO 4: CADASTRO DE PRODUTOR RURAL COM VALIDAÇÃO
    ========================================================================== */
-function initChatbot() {
-    const btnEnviar = document.getElementById("btn-enviar-chat");
-    const inputChat = document.getElementById("input-chat");
-    const corpoChat = document.getElementById("corpo-chat");
+function configurarFormularioCadastro() {
+    const formulario = document.getElementById("form-cadastro");
+    const msgCadastro = document.getElementById("mensagem-cadastro");
 
-    // Respostas automáticas baseadas em palavras-chave
-    const respostasBase = {
-        agrinho: "O Agrinho 2026 promove a união entre inovação digital, sustentabilidade e educação no campo brasileiro!",
-        tecnologia: "Usamos sensores IoT, inteligência artificial para previsão climática e drones para mapeamento de precisão.",
-        sustentabilidade: "A sustentabilidade agrícola envolve práticas que preservam o solo, economizam água e reduzem a pegada de carbono.",
-        ajuda: "Você pode me perguntar sobre: 'Agrinho', 'Tecnologia' ou 'Sustentabilidade'."
-    };
+    formulario.addEventListener("submit", (e) => {
+        e.preventDefault(); // Impede o recarregamento padrão da página
 
-    function processarMensagem() {
-        const textoUsuario = inputChat.value.trim().toLowerCase();
-        if (textoUsuario === "") return;
+        // Captura os dados inseridos
+        const nome = document.getElementById("nome").value;
+        const regiao = document.getElementById("regiao").value;
 
-        // Adiciona mensagem do usuário na tela
-        adicionarBalao(inputChat.value, "usuario");
-        inputChat.value = ""; // Limpa a barra de digitação
+        // Exibe a mensagem de sucesso na tela de forma amigável
+        msgCadastro.innerHTML = `Parabéns, ${nome}! Sua propriedade na região de ${regiao} foi conectada com sucesso ao futuro do agronegócio. Em breve enviamos novidades!`;
+        msgCadastro.style.display = "block";
 
-        // Resposta da IA com delay simulado
-        setTimeout(() => {
-            let respostaTexto = "Desculpe, ainda estou aprendendo sobre esse assunto. Digite 'ajuda' para ver os tópicos!";
-            
-            // Procura palavras-chave na frase digitada
-            for (let chave in respostasBase) {
-                if (textoUsuario.includes(chave)) {
-                    respostaTexto = respostasBase[chave];
-                    break;
-                }
-            }
-            adicionarBalao(respostaTexto, "bot");
-        }, 600);
-    }
-
-    function adicionarBalao(texto, emissor) {
-        const balao = document.createElement("div");
-        balao.className = `chat-balao balao-${emissor}`;
-        balao.textContent = texto;
-        corpoChat.appendChild(balao);
-        
-        // Mantém a barra de rolagem do chat sempre embaixo
-        corpoChat.scrollTop = corpoChat.scrollHeight;
-    }
-
-    if (btnEnviar && inputChat) {
-        btnEnviar.addEventListener("click", processarMensagem);
-        inputChat.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") processarMensagem();
-        });
-    }
-}
-
-/* ==========================================================================
-   8. SCROLL SUAVE PARA LINKS INTERNOS
-   ========================================================================== */
-function initScrollSuave() {
-    const linksInternos = document.querySelectorAll('nav a[href^="#"]');
-    
-    linksInternos.forEach(link => {
-        link.addEventListener("click", function(evento) {
-            evento.preventDefault();
-            const idAlvo = this.getAttribute("href");
-            const elementoAlvo = document.querySelector(idAlvo);
-            
-            if (elementoAlvo) {
-                elementoAlvo.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
-        });
+        // Limpa os campos do formulário após envio bem sucedido
+        formulario.reset();
     });
 }
