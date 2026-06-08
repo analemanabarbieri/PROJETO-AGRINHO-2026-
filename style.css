@@ -1,113 +1,287 @@
 /* ==========================================================================
-   CONFIGURAÇÕES GERAIS E VARIÁVEIS (Estilo Futurista Clean)
+   VARIÁVEIS DE AMBIENTE (:ROOT) - PALETA BRANCO E AZUL FUTURISTA
    ========================================================================== */
 :root {
-    --cor-principal: #ffffff;      /* Fundo puro */
-    --cor-secundaria: #0066ff;     /* Azul neon/futurista */
-    --cor-fundo: #ffffff;          /* Fundo do site */
-    --cor-texto: #000000;          /* Texto principal preto */
-    --cor-botao: #0066ff;          /* Azul padrão para ações */
-    --cor-card: #ffffff;           /* Cartões brancos */
-    --cor-suave: #f4f7fa;          /* Cinza azulado bem claro para contraste */
-    --borda-raio: 16px;            /* Arredondamento moderno */
-    --transicao: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --cor-principal: #ffffff;
+    --cor-secundaria: #0071e3;
+    --cor-fundo: #f5f5f7;
+    --cor-texto: #1d1d1f;
+    --cor-card-bg: #ffffff;
+    --cor-botao: #0071e3;
+    --cor-botao-hover: #005bb5;
+    --cor-borda: #d2d2d7;
+    --fonte-padrao: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --tamanho-base: 16px;
+    --transicao: all 0.3s ease;
 }
 
-/* Reset de elementos */
+/* ==========================================================================
+   CLASSES DE ACESSIBILIDADE E TEMA ESCURO (INJETADAS VIA JS)
+   ========================================================================== */
+body.dark-mode {
+    --cor-fundo: #000000;
+    --cor-texto: #f5f5f7;
+    --cor-card-bg: #1c1c1e;
+    --cor-borda: #3a3a3c;
+    --cor-principal: #1c1c1e;
+}
+
+body.alto-contraste {
+    --cor-fundo: #000000 !important;
+    --cor-texto: #ffff00 !important;
+    --cor-card-bg: #000000 !important;
+    --cor-botao: #ffff00 !important;
+    --cor-botao-hover: #ffffff !important;
+    --cor-borda: #ffff00 !important;
+    color: #ffff00 !important;
+}
+body.alto-contraste * {
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
+}
+
+body.fonte-dislexia {
+    --fonte-padrao: 'Comic Sans MS', 'Arial', sans-serif !important;
+    letter-spacing: 0.12em !important;
+    word-spacing: 0.15em !important;
+    line-height: 1.8 !important;
+}
+
+/* ==========================================================================
+   ESTILOS GERAIS E RESET
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 html {
     scroll-behavior: smooth; /* Scroll Suave nativo */
+    font-size: var(--tamanho-base);
 }
 
 body {
+    font-family: var(--fonte-padrao);
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
-    line-height: 1.6;
+    transition: var(--transicao);
 }
 
-/* ==========================================================================
-   CABEÇALHO (Glassmorphism Futurista)
-   ========================================================================== */
-.header {
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px); /* Efeito de vidro desfocado */
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 102, 255, 0.15);
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* BARRA DE ACESSIBILIDADE */
+.barra-acessibilidade {
+    background-color: var(--cor-texto);
+    padding: 10px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 5%;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+}
+
+.barra-acessibilidade button {
+    background: transparent;
+    color: var(--cor-principal);
+    border: 1px solid var(--cor-principal);
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    transition: var(--transicao);
+}
+
+.barra-acessibilidade button:hover {
+    background-color: var(--cor-principal);
+    color: var(--cor-texto);
+}
+
+/* CABEÇALHO */
+.cabecalho {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px); /* Efeito blur moderno glassmorphism */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+body.dark-mode .cabecalho {
+    background-color: rgba(28, 28, 30, 0.8);
 }
 
 .logo {
     font-size: 1.5rem;
-    font-weight: 900;
-    letter-spacing: 2px;
+    font-weight: 800;
+    color: var(--cor-texto);
 }
 
 .logo span {
     color: var(--cor-secundaria);
-    text-shadow: 0 0 10px rgba(0, 102, 255, 0.3);
 }
 
-.nav a {
-    color: var(--cor-texto);
+.menu ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.menu a {
     text-decoration: none;
-    margin-left: 1.8rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: var(--transicao);
-    position: relative;
-}
-
-/* Efeito de linha passando por baixo do link (Hover animado) */
-.nav a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background-color: var(--cor-secundaria);
+    color: var(--cor-texto);
+    font-weight: 500;
     transition: var(--transicao);
 }
 
-.nav a:hover {
+.menu a:hover {
     color: var(--cor-secundaria);
 }
 
-.nav a:hover::after {
-    width: 100%;
-}
-
-/* ==========================================================================
-   BANNER PRINCIPAL (Carrossel Animado)
-   ========================================================================== */
+/* BANNER PRINCIPAL */
 .banner {
-    position: relative;
-    height: 500px;
-    background: #000000;
-    overflow: hidden;
-    color: #ffffff;
+    background: linear-gradient(135deg, rgba(0,113,227,0.8) 0%, rgba(0,0,0,0.6) 100%), 
+                url('https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?auto=format&fit=crop&w=1200&q=80') no-repeat center/cover;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 20px;
 }
 
-.carousel {
-    height: 100%;
+.banner-conteudo h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.banner-conteudo p {
+    font-size: 1.25rem;
+    margin-bottom: 25px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-principal {
+    background-color: var(--cor-principal);
+    color: var(--cor-secundaria);
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: var(--transicao);
+    display: inline-block;
+}
+
+.btn-principal:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,113,227,0.4);
+}
+
+/* SEÇÕES E GRIDS */
+.secao {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.secao h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.grid-3-colunas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.grid-2-colunas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+/* CARDS COMPONENTES */
+.card {
+    background-color: var(--cor-card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--cor-borda);
+    transition: var(--transicao);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.card-futurista {
+    background-color: var(--cor-card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 5px solid var(--cor-secundaria);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transition: var(--transicao);
+}
+
+.card-futurista:hover {
+    background-color: rgba(0, 113, 227, 0.05);
+}
+
+/* TABELA */
+.tabela-responsiva {
+    overflow-x: auto;
+}
+
+table {
     width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: var(--cor-card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+th {
+    background-color: var(--cor-secundaria);
+    color: white;
+}
+
+/* CARROSSEL DE IMAGENS SIMPLIFICADO */
+.carrossel-container {
+    height: 300px;
+    background: #444 url('https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=1200&q=80') no-repeat center/cover;
+    position: relative;
+    border-radius: 12px;
+    margin: 40px 0;
+    overflow: hidden;
+}
+
+.carrossel-slides {
+    width: 100%;
+    height: 100%;
     position: relative;
 }
 
-.carousel-item {
+.slide {
     position: absolute;
     top: 0;
     left: 0;
@@ -116,264 +290,129 @@ body {
     opacity: 0;
     transition: opacity 1s ease-in-out;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    /* Gradientes tecnológicos abstratos simulando o ambiente futurista */
-    background-image: linear-gradient(135deg, rgba(0, 102, 255, 0.6) 0%, rgba(0, 0, 0, 0.9) 100%);
+    align-items: flex-end;
+    background-color: rgba(0,0,0,0.3);
 }
 
-.carousel-item:nth-child(2) {
-    background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 82, 204, 0.6) 100%);
-}
-
-.carousel-item:nth-child(3) {
-    background-image: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(0, 102, 255, 0.4) 100%);
-}
-
-.carousel-item.active {
+.slide.ativo {
     opacity: 1;
-    z-index: 1;
 }
 
-.carousel-content {
-    text-align: center;
-    max-width: 800px;
-    padding: 0 24px;
-    transform: translateY(20px);
-    animation: subidaTexto 0.8s forwards ease-out;
-}
-
-@keyframes subidaTexto {
-    to { transform: translateY(0); }
-}
-
-.carousel-content h1 {
-    font-size: 3.2rem;
-    font-weight: 800;
-    margin-bottom: 1.2rem;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-}
-
-.carousel-content p {
-    font-size: 1.2rem;
-    opacity: 0.9;
-}
-
-/* ==========================================================================
-   CONTAINERS E ELEMENTOS DE LAYOUT (Flexbox e Grid)
-   ========================================================================== */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 4%;
-}
-
-.section {
-    padding: 4rem 0;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin-bottom: 2.5rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.section-title::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
-    background-color: var(--cor-secundaria);
-    margin: 12px auto 0;
-    border-radius: 2px;
-}
-
-.grid-2 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
-}
-
-.grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-}
-
-/* ==========================================================================
-   ESTILIZAÇÃO DOS CARTÕES (Cards com Efeito de Hover Atractivo)
-   ========================================================================== */
-.card {
-    background-color: var(--cor-card);
-    padding: 2.5rem;
-    border-radius: var(--borda-raio);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    transition: var(--transicao);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    position: relative;
-}
-
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 102, 255, 0.12);
-    border-color: rgba(0, 102, 255, 0.3);
-}
-
-.card-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.border-blue {
-    border-top: 4px solid var(--cor-secundaria);
-}
-
-.bg-light {
-    background-color: var(--cor-suave);
-    padding: 5rem 2rem;
-    border-radius: var(--borda-raio);
-}
-
-/* ==========================================================================
-   BOTÕES E ELEMENTOS INTERATIVOS
-   ========================================================================== */
-.btn {
-    background-color: var(--cor-botao);
-    color: #ffffff;
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: var(--borda-raio);
-    cursor: pointer;
-    transition: var(--transicao);
+.slide-info {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
     width: 100%;
-    letter-spacing: 0.5px;
+    padding: 15px;
+    font-size: 1.1rem;
+    text-align: center;
 }
 
-.btn:hover {
-    background-color: #0052cc;
-    box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
+/* PAINEL INTERATIVO E FORMULÁRIOS */
+.painel-interativo {
+    background-color: var(--cor-card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--cor-borda);
 }
 
-/* Filtros da Área de Notícias */
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-}
-
-.btn-filter {
-    background: transparent;
-    border: 2px solid var(--cor-secundaria);
-    color: var(--cor-secundaria);
-    padding: 0.6rem 1.8rem;
-    font-weight: 700;
-    font-size: 0.9rem;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: var(--transicao);
-}
-
-.btn-filter.active, .btn-filter:hover {
-    background-color: var(--cor-secundaria);
-    color: #ffffff;
-    box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
-}
-
-/* Inputs de Formulários */
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-input {
+.painel-interativo input {
     width: 100%;
-    padding: 0.9rem 1.2rem;
-    border: 2px solid #e2e8f0;
-    border-radius: var(--borda-raio);
-    outline: none;
-    font-size: 1rem;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    background: var(--cor-fundo);
     color: var(--cor-texto);
+}
+
+.painel-interativo button {
+    background-color: var(--cor-botao);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
     transition: var(--transicao);
 }
 
-input:focus {
-    border-color: var(--cor-secundaria);
-    box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+.painel-interativo button:hover {
+    background-color: var(--cor-botao-hover);
 }
 
-/* Blocos de Notificação de Saídas (JS) */
-.resultado {
-    margin-top: 1.5rem;
-    padding: 1.2rem;
-    border-radius: var(--borda-raio);
-    font-weight: 600;
-    display: none;
-    font-size: 0.95rem;
-}
-
-.sucesso {
-    background-color: #e6f4ea;
-    color: #137333;
-    border: 1px solid #c2e7cd;
-}
-
-.info {
-    background-color: #e8f0fe;
-    color: #1a73e8;
-    border: 1px solid #c2e7cd;
-    line-height: 1.8;
-}
-
-/* Elementos de Conclusão */
-.text-center { text-align: center; }
-
-.citacao {
-    font-style: italic;
-    font-size: 1.4rem;
+.resultado-box {
+    margin-top: 15px;
+    font-weight: bold;
     color: var(--cor-secundaria);
-    margin-top: 2rem;
-    font-weight: 600;
 }
 
-/* ==========================================================================
-   RODAPÉ (Footer)
-   ========================================================================== */
-.footer {
-    background-color: #000000;
-    color: #ffffff;
+/* CHAT BOX */
+.chat-box {
+    height: 150px;
+    overflow-y: auto;
+    border: 1px solid var(--cor-borda);
+    padding: 10px;
+    border-radius: 6px;
+    background: var(--cor-fundo);
+    margin-bottom: 10px;
+}
+
+.chat-input-group {
+    display: flex;
+    gap: 5px;
+}
+
+.chat-input-group input {
+    margin: 0;
+}
+
+.chat-input-group button {
+    width: auto;
+}
+
+.bot-msg { color: #0071e3; margin-bottom: 5px; }
+.user-msg { color: #2e7d32; margin-bottom: 5px; text-align: right; }
+
+/* NOTÍCIAS ITEM */
+.noticia-item {
+    padding: 10px;
+    border-bottom: 1px solid var(--cor-borda);
+    margin-bottom: 10px;
+}
+
+/* CONCLUSÃO */
+.conclusao {
     text-align: center;
-    padding: 3rem 2rem;
-    margin-top: 6rem;
-    border-top: 3px solid var(--cor-secundaria);
 }
 
-/* ==========================================================================
-   RESPONSIVIDADE (Ajustes para Dispositivos Móveis)
-   ========================================================================== */
+blockquote {
+    font-size: 1.5rem;
+    font-style: italic;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--cor-secundaria);
+}
+
+/* FOOTER */
+.rodape {
+    background-color: var(--cor-card-bg);
+    text-align: center;
+    padding: 30px;
+    border-top: 1px solid var(--cor-borda);
+    font-size: 0.9rem;
+}
+
+/* RESPONSIVIDADE EM CELULARES */
 @media (max-width: 768px) {
-    .header {
+    .cabecalho {
         flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
+        gap: 15px;
     }
-    
-    .nav a {
-        margin: 0 0.6rem;
-        font-size: 0.85rem;
+    .banner-conteudo h1 {
+        font-size: 2rem;
     }
-    
-    .carousel-content h1 {
-        font-size: 2.2rem;
-    }
-    
-    .section-title {
-        font-size: 1.8rem;
+    html {
+        font-size: 14px;
     }
 }
