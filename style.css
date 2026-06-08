@@ -1,67 +1,379 @@
-/* Definição das Variáveis CSS - Padrão (Modo Claro / Futurista Branco e Azul) */
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS (Estilo Futurista Clean)
+   ========================================================================== */
 :root {
-    --cor-principal: #ffffff;    
-    --cor-secundaria: #0066ff;   
-    --cor-fundo: #f4f7fa;        
-    --cor-texto: #111111;        
-    --cor-botao: #0052cc;        
-    --cor-card: #ffffff;
-    --borda-raio: 12px;
-    --transicao: all 0.3s ease;
-    --fonte-padrao: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --cor-principal: #ffffff;      /* Fundo puro */
+    --cor-secundaria: #0066ff;     /* Azul neon/futurista */
+    --cor-fundo: #ffffff;          /* Fundo do site */
+    --cor-texto: #000000;          /* Texto principal preto */
+    --cor-botao: #0066ff;          /* Azul padrão para ações */
+    --cor-card: #ffffff;           /* Cartões brancos */
+    --cor-suave: #f4f7fa;          /* Cinza azulado bem claro para contraste */
+    --borda-raio: 16px;            /* Arredondamento moderno */
+    --transicao: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Reset de elementos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth; /* Scroll Suave nativo */
+}
+
+body {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
 }
 
 /* ==========================================================================
-   CLASSES DE ACESSIBILIDADE (Modificam as variáveis globais)
+   CABEÇALHO (Glassmorphism Futurista)
    ========================================================================== */
-
-/* 1. MODO ESCURO */
-body.dark-mode {
-    --cor-principal: #1a1a1a;
-    --cor-secundaria: #3385ff;
-    --cor-fundo: #121212;
-    --cor-texto: #ffffff;
-    --cor-botao: #0066ff;
-    --cor-card: #1e1e1e;
-}
-body.dark-mode .header { background-color: rgba(26, 26, 26, 0.95); }
-body.dark-mode input { background-color: #2a2a2a; color: white; border-color: #444; }
-body.dark-mode .btn-filter { background-color: #2a2a2a; color: var(--cor-secundaria); }
-
-/* 2. ALTO CONTRASTE */
-body.alto-contraste {
-    --cor-principal: #000000;
-    --cor-secundaria: #ffff00; /* Amarelo de alto contraste */
-    --cor-fundo: #000000;
-    --cor-texto: #ffffff;
-    --cor-botao: #ffff00;
-    --cor-card: #000000;
-}
-body.alto-contraste * {
-    border-color: #ffff00 !important;
-    color: #ffffff !important;
-}
-body.alto-contraste .logo span, 
-body.alto-contraste a:hover, 
-body.alto-contraste h1, 
-body.alto-contraste h2, 
-body.alto-contraste h3,
-body.alto-contraste .citacao {
-    color: #ffff00 !important;
-}
-body.alto-contraste .btn, 
-body.alto-contraste .btn-filter.active,
-body.alto-contraste .btn-acessibilidade-toggle {
-    background-color: #ffff00 !important;
-    color: #000000 !important;
-    font-weight: bold;
+.header {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px); /* Efeito de vidro desfocado */
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 102, 255, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
 }
 
-/* 3. FONTE PARA DISLEXIA */
-body.fonte-dislexia {
-    /* Comic Sans ou Verdana possuem excelente espaçamento de base para dislexia se a OpenDyslexic não estiver instalada */
-    --fonte-padrao: 'Comic Sans MS', 'Verdana', sans-serif;
+.logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
 }
-body.fonte-dislexia * {
-    font-family: var(--fonte-padrao) !important;
-    letter-spacing: 0.05em !important; /*
+
+.logo span {
+    color: var(--cor-secundaria);
+    text-shadow: 0 0 10px rgba(0, 102, 255, 0.3);
+}
+
+.nav a {
+    color: var(--cor-texto);
+    text-decoration: none;
+    margin-left: 1.8rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transicao);
+    position: relative;
+}
+
+/* Efeito de linha passando por baixo do link (Hover animado) */
+.nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--cor-secundaria);
+    transition: var(--transicao);
+}
+
+.nav a:hover {
+    color: var(--cor-secundaria);
+}
+
+.nav a:hover::after {
+    width: 100%;
+}
+
+/* ==========================================================================
+   BANNER PRINCIPAL (Carrossel Animado)
+   ========================================================================== */
+.banner {
+    position: relative;
+    height: 500px;
+    background: #000000;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.carousel {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    /* Gradientes tecnológicos abstratos simulando o ambiente futurista */
+    background-image: linear-gradient(135deg, rgba(0, 102, 255, 0.6) 0%, rgba(0, 0, 0, 0.9) 100%);
+}
+
+.carousel-item:nth-child(2) {
+    background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 82, 204, 0.6) 100%);
+}
+
+.carousel-item:nth-child(3) {
+    background-image: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(0, 102, 255, 0.4) 100%);
+}
+
+.carousel-item.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.carousel-content {
+    text-align: center;
+    max-width: 800px;
+    padding: 0 24px;
+    transform: translateY(20px);
+    animation: subidaTexto 0.8s forwards ease-out;
+}
+
+@keyframes subidaTexto {
+    to { transform: translateY(0); }
+}
+
+.carousel-content h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-bottom: 1.2rem;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.carousel-content p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* ==========================================================================
+   CONTAINERS E ELEMENTOS DE LAYOUT (Flexbox e Grid)
+   ========================================================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 4%;
+}
+
+.section {
+    padding: 4rem 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--cor-secundaria);
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* ==========================================================================
+   ESTILIZAÇÃO DOS CARTÕES (Cards com Efeito de Hover Atractivo)
+   ========================================================================== */
+.card {
+    background-color: var(--cor-card);
+    padding: 2.5rem;
+    border-radius: var(--borda-raio);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: var(--transicao);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 102, 255, 0.12);
+    border-color: rgba(0, 102, 255, 0.3);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.border-blue {
+    border-top: 4px solid var(--cor-secundaria);
+}
+
+.bg-light {
+    background-color: var(--cor-suave);
+    padding: 5rem 2rem;
+    border-radius: var(--borda-raio);
+}
+
+/* ==========================================================================
+   BOTÕES E ELEMENTOS INTERATIVOS
+   ========================================================================== */
+.btn {
+    background-color: var(--cor-botao);
+    color: #ffffff;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: var(--borda-raio);
+    cursor: pointer;
+    transition: var(--transicao);
+    width: 100%;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover {
+    background-color: #0052cc;
+    box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
+}
+
+/* Filtros da Área de Notícias */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.btn-filter {
+    background: transparent;
+    border: 2px solid var(--cor-secundaria);
+    color: var(--cor-secundaria);
+    padding: 0.6rem 1.8rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.btn-filter.active, .btn-filter:hover {
+    background-color: var(--cor-secundaria);
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
+}
+
+/* Inputs de Formulários */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--borda-raio);
+    outline: none;
+    font-size: 1rem;
+    color: var(--cor-texto);
+    transition: var(--transicao);
+}
+
+input:focus {
+    border-color: var(--cor-secundaria);
+    box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+}
+
+/* Blocos de Notificação de Saídas (JS) */
+.resultado {
+    margin-top: 1.5rem;
+    padding: 1.2rem;
+    border-radius: var(--borda-raio);
+    font-weight: 600;
+    display: none;
+    font-size: 0.95rem;
+}
+
+.sucesso {
+    background-color: #e6f4ea;
+    color: #137333;
+    border: 1px solid #c2e7cd;
+}
+
+.info {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+    border: 1px solid #c2e7cd;
+    line-height: 1.8;
+}
+
+/* Elementos de Conclusão */
+.text-center { text-align: center; }
+
+.citacao {
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--cor-secundaria);
+    margin-top: 2rem;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   RODAPÉ (Footer)
+   ========================================================================== */
+.footer {
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-top: 6rem;
+    border-top: 3px solid var(--cor-secundaria);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (Ajustes para Dispositivos Móveis)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .nav a {
+        margin: 0 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .carousel-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+}
