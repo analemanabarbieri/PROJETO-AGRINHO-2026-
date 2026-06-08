@@ -1,146 +1,157 @@
-// Aguarda o documento HTML carregar completamente
+// AGUARDA O CARREGAMENTO COMPLETO DO DOCUMENTO
 document.addEventListener("DOMContentLoaded", () => {
-    inicializarCarrossel();
-    renderizarNoticias("todos");
-    configurarFiltrosNoticias();
-    configurarFormularioCadastro();
-});
 
-/* ==========================================================================
-   OPÇÃO 2: CARROSSEL AUTOMÁTICO DO BANNER
-   ========================================================================== */
-function inicializarCarrossel() {
-    const slides = document.querySelectorAll(".carousel-item");
+    /* ==========================================================================
+       FUNCIONALIDADE 1: CARROSSEL AUTOMÁTICO
+       ========================================================================== */
+    const slides = document.querySelectorAll(".slide");
     let slideAtual = 0;
 
-    // Função que muda o slide ativo
     function proximoSlide() {
-        slides[slideAtual].classList.remove("active");
-        slideAtual = (slideAtual + 1) % slides.length; // Retorna ao 0 quando chega ao fim
-        slides[slideAtual].classList.add("active");
+        // Remove a classe ativa do slide atual
+        slides[slideAtual].classList.remove("ativo");
+        
+        // Calcula o índice do próximo slide de forma circular
+        slideAtual = (slideAtual + 1) % slides.length;
+        
+        // Adiciona a classe ativa no novo slide
+        slides[slideAtual].classList.add("ativo");
     }
 
-    // Configura a troca automática a cada 4 segundos (4000ms)
+    // Altera o slide automaticamente a cada 4 segundos (4000ms)
     setInterval(proximoSlide, 4000);
-}
 
-/* ==========================================================================
-   OPÇÃO 5: ÁREA DE NOTÍCIAS DINÂMICA (Dados e Filtragem)
-   ========================================================================== */
-// Banco de dados fictício simulando notícias do setor
-const bancoNoticias = [
-    {
-        titulo: "Drones e IA reduzem em até 40% desperdício de água no Sul",
-        categoria: "tech",
-        descricao: "Novas fazendas verticais utilizam IA de ponta para controlar o gotejamento preciso e inteligente."
-    },
-    {
-        titulo: "Paraná lidera transição para tratores 100% Elétricos",
-        categoria: "sustentavel",
-        descricao: "Maquinários movidos a energia solar gerada na própria propriedade começam a ser distribuídos."
-    },
-    {
-        titulo: "Agrinho 2026 bate recorde de projetos tecnológicos",
-        categoria: "tech",
-        descricao: "Estudantes apresentam soluções incríveis combinando robótica de baixo custo e sensores de solo."
-    },
-    {
-        titulo: "Uso de biofertilizantes cresce e regenera solos antigos",
-        categoria: "sustentavel",
-        descricao: "Alternativas sustentáveis substituem químicos agressivos e geram créditos de carbono valiosos."
-    }
-];
 
-// Função que cria os elementos HTML das notícias na tela
-function renderizarNoticias(filtro) {
-    const gridNoticias = document.getElementById("news-grid");
-    gridNoticias.innerHTML = ""; // Limpa a área antes de renderizar
+    /* ==========================================================================
+       FUNCIONALIDADE 2: CALCULADORA ECOLÓGICA
+       ========================================================================== */
+    const btnCalcular = document.getElementById("btn-calcular");
+    const inputHectares = document.getElementById("hectares");
+    const boxResultado = document.getElementById("resultado-calculo");
 
-    // Filtra os dados com base na escolha do usuário
-    const noticiasFiltradas = bancoNoticias.filter(noticia => filtro === "todos" || noticia.categoria === filtro);
+    btnCalcular.addEventListener("click", () => {
+        const hectares = parseFloat(inputHectares.value);
 
-    noticiasFiltradas.forEach(noticia => {
-        const cardNoticia = document.createElement("div");
-        cardNoticia.className = "card border-blue";
-        cardNoticia.innerHTML = `
-            <span class="badge" style="color: var(--cor-secundaria); font-weight: bold; text-transform: uppercase; font-size: 0.8rem;">
-                [ ${noticia.categoria === 'tech' ? 'Tecnologia' : 'Sustentabilidade'} ]
-            </span>
-            <h4 style="margin: 0.5rem 0; font-size: 1.2rem;">${noticia.titulo}</h4>
-            <p style="font-size: 0.95rem; color: #555;">${noticia.descricao}</p>
-        `;
-        gridNoticias.appendChild(cardNoticia);
+        // Validação simples para garantir que o usuário digitou um número válido
+        if (isNaN(hectares) || hectares <= 0) {
+            alert("Por favor, digite um número de hectares válido maior que zero.");
+            return;
+        }
+
+        // Fatores de cálculo hipotéticos para sustentabilidade em 2026
+        const litrosEconomizadosAgua = hectares * 12000; 
+        const kgReducaoCO2 = hectares * 340;
+
+        // Atualiza a tela com os resultados formatados
+        document.getElementById("res-agua").innerText = litrosEconomizadosAgua.toLocaleString("pt-BR");
+        document.getElementById("res-co2").innerText = kgReducaoCO2.toLocaleString("pt-BR");
+
+        // Torna a caixa de resultados visível removendo a classe 'escondido'
+        boxResultado.classList.remove("escondido");
     });
-}
 
-// Configura o clique nos botões de filtro
-function configurarFiltrosNoticias() {
-    const botoes = document.querySelectorAll(".btn-filter");
-    botoes.forEach(botao => {
-        botao.addEventListener("click", (e) => {
-            // Remove classe ativa de todos
-            botoes.forEach(b => b.classList.remove("active"));
-            // Adiciona classe ativa no clicado
-            e.target.classList.add("active");
-            
-            // Filtra e exibe as notícias correspondentes
-            const categoriaFiltro = e.target.getAttribute("data-filter");
-            renderizarNoticias(categoriaFiltro);
+
+    /* ==========================================================================
+       FUNCIONALIDADE 3: GALERIA DE IMAGENS COM LIGHTBOX (EXPANSÃO)
+       ========================================================================== */
+    const imagensGaleria = document.querySelectorAll(".img-galeria");
+    const lightbox = document.getElementById("lightbox");
+    const imgAmpliada = document.getElementById("img-ampliada");
+    const fecharLightbox = document.getElementById("fechar-lightbox");
+
+    imagensGaleria.forEach(img => {
+        img.addEventListener("click", () => {
+            // Define o link da imagem clicada na imagem do modal do Lightbox
+            imgAmpliada.src = img.src;
+            imgAmpliada.alt = img.alt;
+            lightbox.classList.remove("escondido");
         });
     });
-}
 
-/* ==========================================================================
-   OPÇÃO 3: CALCULADORA ECOLÓGICA SIMPLES
-   ========================================================================== */
-function calcularEconomia() {
-    const inputHectares = document.getElementById("hectares");
-    const containerResultado = document.getElementById("resultado-calc");
-    const hectares = parseFloat(inputHectares.value);
-
-    // Validação se o número inserido é válido
-    if (isNaN(hectares) || hectares <= 0) {
-        containerResultado.className = "resultado erro";
-        containerResultado.style.backgroundColor = "#fce8e6";
-        containerResultado.style.color = "#c5221f";
-        containerResultado.style.borderLeft = "4px solid #c5221f";
-        containerResultado.innerHTML = "Por favor, insira um número válido de hectares.";
-        containerResultado.style.display = "block";
-        return;
-    }
-
-    // Lógica matemática fictícia baseada em economia média real por IA no campo
-    const litrosEconomizadosPorDia = hectares * 1500; 
-    const reducaoCarbonoKg = hectares * 12;
-
-    containerResultado.className = "resultado info";
-    containerResultado.style.display = "block";
-    containerResultado.innerHTML = `
-        <p><strong>Resultado da sua Automação:</strong></p>
-        <p>💧 Economia Estimada de Água: <strong>${litrosEconomizadosPorDia.toLocaleString('pt-BR')} litros</strong> por dia.</p>
-        <p>🌱 Redução de Carbono: <strong>${reducaoCarbonoKg.toLocaleString('pt-BR')} kg de CO₂</strong> evitados por safra.</p>
-    `;
-}
-
-/* ==========================================================================
-   OPÇÃO 4: CADASTRO DE PRODUTOR RURAL COM VALIDAÇÃO
-   ========================================================================== */
-function configurarFormularioCadastro() {
-    const formulario = document.getElementById("form-cadastro");
-    const msgCadastro = document.getElementById("mensagem-cadastro");
-
-    formulario.addEventListener("submit", (e) => {
-        e.preventDefault(); // Impede o recarregamento padrão da página
-
-        // Captura os dados inseridos
-        const nome = document.getElementById("nome").value;
-        const regiao = document.getElementById("regiao").value;
-
-        // Exibe a mensagem de sucesso na tela de forma amigável
-        msgCadastro.innerHTML = `Parabéns, ${nome}! Sua propriedade na região de ${regiao} foi conectada com sucesso ao futuro do agronegócio. Em breve enviamos novidades!`;
-        msgCadastro.style.display = "block";
-
-        // Limpa os campos do formulário após envio bem sucedido
-        formulario.reset();
+    // Fecha o lightbox ao clicar no 'X'
+    fecharLightbox.addEventListener("click", () => {
+        lightbox.classList.add("escondido");
     });
-}
+
+    // Fecha o lightbox caso o usuário clique fora da imagem
+    lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.add("escondido");
+        }
+    });
+
+
+    /* ==========================================================================
+       FUNCIONALIDADE 4: CADASTRO COM VALIDAÇÃO
+       ========================================================================== */
+    const formCadastro = document.getElementById("form-cadastro");
+    const msgSucesso = document.getElementById("msg-sucesso");
+
+    formCadastro.addEventListener("submit", (e) => {
+        // Impede o envio real do formulário para tratar com JS
+        e.preventDefault();
+
+        // Pega os dados apenas para simular o processo
+        const nome = document.getElementById("nome").value;
+
+        if (nome.trim().length < 3) {
+            alert("Por favor, insira um nome válido.");
+            return;
+        }
+
+        // Exibe mensagem de sucesso e limpa o formulário
+        msgSucesso.classList.remove("escondido");
+        formCadastro.reset();
+
+        // Oculta a mensagem de sucesso após 4 segundos
+        setTimeout(() => {
+            msgSucesso.classList.add("escondido");
+        }, 4000);
+    });
+
+
+    /* ==========================================================================
+       FUNCIONALIDADE 5: ÁREA DE NOTÍCIAS COM FILTROS DINÂMICOS
+       ========================================================================== */
+    const botoesFiltro = document.querySelectorAll(".btn-filtro");
+    const cardsNoticias = document.querySelectorAll(".noticia-card");
+
+    botoesFiltro.forEach(botao => {
+        botao.addEventListener("click", () => {
+            // Remove classe ativa de todos os botões e adiciona ao clicado
+            botoesFiltro.forEach(b => b.classList.remove("ativo"));
+            botao.classList.add("ativo");
+
+            const filtroEscolhido = botao.getAttribute("data-filtro");
+
+            cardsNoticias.forEach(card => {
+                const categoriaCard = card.getAttribute("data-categoria");
+
+                // Regra de exibição: Se for 'todos' ou a categoria bater, exibe. Se não, esconde.
+                if (filtroEscolhido === "todos" || filtroEscolhido === "categoriaCard" || filtroEscolhido === categoriaCard) {
+                    card.classList.remove("escondido");
+                } else {
+                    card.classList.add("escondido");
+                }
+            });
+        });
+    });
+
+
+    /* ==========================================================================
+       RECURSOS DE ACESSIBILIDADE: ALTO CONTRASTE E DISLEXIA
+       ========================================================================== */
+    const btnAltoContraste = document.getElementById("btn-alto-contraste");
+    const btnDislexia = document.getElementById("btn-dislexia");
+
+    // Liga/Desliga a classe de Alto Contraste no elemento raiz (HTML)
+    btnAltoContraste.addEventListener("click", () => {
+        document.documentElement.classList.toggle("alto-contraste");
+    });
+
+    // Liga/Desliga a classe com espaçamento para Dislexia no corpo inteiro (body)
+    btnDislexia.addEventListener("click", () => {
+        document.body.classList.toggle("fonte-dislexia");
+    });
+
+});
