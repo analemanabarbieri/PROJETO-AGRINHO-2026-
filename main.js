@@ -1,157 +1,86 @@
-// AGUARDA O CARREGAMENTO COMPLETO DO DOCUMENTO
-document.addEventListener("DOMContentLoaded", () => {
+// Aguarda o documento HTML carregar totalmente antes de executar o JS
+document.addEventListener('DOMContentLoaded', () => {
 
     /* ==========================================================================
-       FUNCIONALIDADE 1: CARROSSEL AUTOMÁTICO
+       1. FUNCIONALIDADE: MENU RESPONSIVO (MOBILE)
        ========================================================================== */
-    const slides = document.querySelectorAll(".slide");
-    let slideAtual = 0;
+    const menuToggle = document.getElementById('menu-toggle');
+    const navbar = document.getElementById('navbar');
 
-    function proximoSlide() {
-        // Remove a classe ativa do slide atual
-        slides[slideAtual].classList.remove("ativo");
-        
-        // Calcula o índice do próximo slide de forma circular
-        slideAtual = (slideAtual + 1) % slides.length;
-        
-        // Adiciona a classe ativa no novo slide
-        slides[slideAtual].classList.add("ativo");
-    }
-
-    // Altera o slide automaticamente a cada 4 segundos (4000ms)
-    setInterval(proximoSlide, 4000);
-
-
-    /* ==========================================================================
-       FUNCIONALIDADE 2: CALCULADORA ECOLÓGICA
-       ========================================================================== */
-    const btnCalcular = document.getElementById("btn-calcular");
-    const inputHectares = document.getElementById("hectares");
-    const boxResultado = document.getElementById("resultado-calculo");
-
-    btnCalcular.addEventListener("click", () => {
-        const hectares = parseFloat(inputHectares.value);
-
-        // Validação simples para garantir que o usuário digitou um número válido
-        if (isNaN(hectares) || hectares <= 0) {
-            alert("Por favor, digite um número de hectares válido maior que zero.");
-            return;
-        }
-
-        // Fatores de cálculo hipotéticos para sustentabilidade em 2026
-        const litrosEconomizadosAgua = hectares * 12000; 
-        const kgReducaoCO2 = hectares * 340;
-
-        // Atualiza a tela com os resultados formatados
-        document.getElementById("res-agua").innerText = litrosEconomizadosAgua.toLocaleString("pt-BR");
-        document.getElementById("res-co2").innerText = kgReducaoCO2.toLocaleString("pt-BR");
-
-        // Torna a caixa de resultados visível removendo a classe 'escondido'
-        boxResultado.classList.remove("escondido");
+    // Ao clicar no botão hambúrguer, adiciona ou remove a classe 'active' do menu
+    menuToggle.addEventListener('click', () => {
+        navbar.classList.toggle('active');
     });
 
-
-    /* ==========================================================================
-       FUNCIONALIDADE 3: GALERIA DE IMAGENS COM LIGHTBOX (EXPANSÃO)
-       ========================================================================== */
-    const imagensGaleria = document.querySelectorAll(".img-galeria");
-    const lightbox = document.getElementById("lightbox");
-    const imgAmpliada = document.getElementById("img-ampliada");
-    const fecharLightbox = document.getElementById("fechar-lightbox");
-
-    imagensGaleria.forEach(img => {
-        img.addEventListener("click", () => {
-            // Define o link da imagem clicada na imagem do modal do Lightbox
-            imgAmpliada.src = img.src;
-            imgAmpliada.alt = img.alt;
-            lightbox.classList.remove("escondido");
+    // Fecha o menu automaticamente quando o usuário clica em algum link dele
+    const linksMenu = document.querySelectorAll('.navbar a');
+    linksMenu.forEach(link => {
+        link.addEventListener('click', () => {
+            navbar.classList.remove('active');
         });
     });
 
-    // Fecha o lightbox ao clicar no 'X'
-    fecharLightbox.addEventListener("click", () => {
-        lightbox.classList.add("escondido");
-    });
 
-    // Fecha o lightbox caso o usuário clique fora da imagem
-    lightbox.addEventListener("click", (e) => {
-        if (e.target === lightbox) {
-            lightbox.classList.add("escondido");
+    /* ==========================================================================
+       2. FUNCIONALIDADE: ALTERNADOR DE TEMA (CLARO / ESCURO)
+       ========================================================================== */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    
+    // Escuta o clique no botão de tema
+    themeToggleBtn.addEventListener('click', () => {
+        // Coloca ou tira a classe 'dark-mode' da tag <body>
+        document.body.classList.toggle('dark-mode');
+        
+        // Altera o texto visual do botão para dar um feedback bacana
+        if (document.body.classList.contains('dark-mode')) {
+            themeToggleBtn.textContent = '☀️ Claro';
+        } else {
+            themeToggleBtn.textContent = '🌙 Escuro';
         }
     });
 
 
     /* ==========================================================================
-       FUNCIONALIDADE 4: CADASTRO COM VALIDAÇÃO
+       3. FUNCIONALIDADE: VALIDAÇÃO DO FORMULÁRIO DE CADASTRO
        ========================================================================== */
-    const formCadastro = document.getElementById("form-cadastro");
-    const msgSucesso = document.getElementById("msg-sucesso");
+    const formProdutor = document.getElementById('form-produtor');
+    const feedback = document.getElementById('form-feedback');
 
-    formCadastro.addEventListener("submit", (e) => {
-        // Impede o envio real do formulário para tratar com JS
-        e.preventDefault();
+    formProdutor.addEventListener('submit', (evento) => {
+        // Evita que a página recarregue ao enviar o formulário (padrão do HTML)
+        evento.preventDefault();
 
-        // Pega os dados apenas para simular o processo
-        const nome = document.getElementById("nome").value;
+        // Captura os valores digitados pelos usuários
+        const nome = document.getElementById('nome').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const propriedade = document.getElementById('propriedade').value.trim();
 
-        if (nome.trim().length < 3) {
-            alert("Por favor, insira um nome válido.");
+        // Validação simples (Garante que os campos obrigatórios não estão vazios)
+        if (nome === '' || email === '') {
+            exibirFeedback('Por favor, preencha todos os campos obrigatórios.', 'erro');
             return;
         }
 
-        // Exibe mensagem de sucesso e limpa o formulário
-        msgSucesso.classList.remove("escondido");
-        formCadastro.reset();
+        // Simulação de Sucesso no envio
+        let mensagemSucesso = `Parabéns, ${nome}! Seu cadastro foi realizado com sucesso.`;
+        if (propriedade) {
+            mensagemSucesso += ` A propriedade "${propriedade}" agora faz parte do Agrinho 2026.`;
+        }
 
-        // Oculta a mensagem de sucesso após 4 segundos
+        exibirFeedback(mensagemSucesso, 'success');
+
+        // Limpa o formulário após o cadastro bem-sucedido
+        formProdutor.reset();
+    });
+
+    // Função auxiliar para exibir a caixinha de aviso do formulário
+    function exibirFeedback(mensagem, tipo) {
+        feedback.textContent = mensaje = mensagem;
+        feedback.className = `form-feedback ${tipo}`; // Adiciona a classe de estilo verde
+        
+        // Esconde a mensagem de sucesso automaticamente após 5 segundos
         setTimeout(() => {
-            msgSucesso.classList.add("escondido");
-        }, 4000);
-    });
-
-
-    /* ==========================================================================
-       FUNCIONALIDADE 5: ÁREA DE NOTÍCIAS COM FILTROS DINÂMICOS
-       ========================================================================== */
-    const botoesFiltro = document.querySelectorAll(".btn-filtro");
-    const cardsNoticias = document.querySelectorAll(".noticia-card");
-
-    botoesFiltro.forEach(botao => {
-        botao.addEventListener("click", () => {
-            // Remove classe ativa de todos os botões e adiciona ao clicado
-            botoesFiltro.forEach(b => b.classList.remove("ativo"));
-            botao.classList.add("ativo");
-
-            const filtroEscolhido = botao.getAttribute("data-filtro");
-
-            cardsNoticias.forEach(card => {
-                const categoriaCard = card.getAttribute("data-categoria");
-
-                // Regra de exibição: Se for 'todos' ou a categoria bater, exibe. Se não, esconde.
-                if (filtroEscolhido === "todos" || filtroEscolhido === "categoriaCard" || filtroEscolhido === categoriaCard) {
-                    card.classList.remove("escondido");
-                } else {
-                    card.classList.add("escondido");
-                }
-            });
-        });
-    });
-
-
-    /* ==========================================================================
-       RECURSOS DE ACESSIBILIDADE: ALTO CONTRASTE E DISLEXIA
-       ========================================================================== */
-    const btnAltoContraste = document.getElementById("btn-alto-contraste");
-    const btnDislexia = document.getElementById("btn-dislexia");
-
-    // Liga/Desliga a classe de Alto Contraste no elemento raiz (HTML)
-    btnAltoContraste.addEventListener("click", () => {
-        document.documentElement.classList.toggle("alto-contraste");
-    });
-
-    // Liga/Desliga a classe com espaçamento para Dislexia no corpo inteiro (body)
-    btnDislexia.addEventListener("click", () => {
-        document.body.classList.toggle("fonte-dislexia");
-    });
-
+            feedback.className = 'form-feedback hidden';
+        }, 5000);
+    }
 });
