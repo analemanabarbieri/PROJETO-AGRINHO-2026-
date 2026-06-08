@@ -1,157 +1,77 @@
-// AGUARDA O CARREGAMENTO COMPLETO DO DOCUMENTO
+// AGUARDA O CARREGAMENTO COMPLETO DA PÁGINA ANTES DE EXECUTAR O SCRIPT
 document.addEventListener("DOMContentLoaded", () => {
 
     /* ==========================================================================
-       FUNCIONALIDADE 1: CARROSSEL AUTOMÁTICO
+       1. CONTROLE DO MENU RESPONSIVO (MOBILE)
        ========================================================================== */
-    const slides = document.querySelectorAll(".slide");
-    let slideAtual = 0;
+    const btnMenuAbrir = document.getElementById("btn-menu-abrir");
+    const btnMenuFechar = document.getElementById("btn-menu-fechar");
+    const menuMobileContainer = document.getElementById("menu-mobile-container");
+    const overlayMenuBg = document.getElementById("overlay-menu-bg");
 
-    function proximoSlide() {
-        // Remove a classe ativa do slide atual
-        slides[slideAtual].classList.remove("ativo");
-        
-        // Calcula o índice do próximo slide de forma circular
-        slideAtual = (slideAtual + 1) % slides.length;
-        
-        // Adiciona a classe ativa no novo slide
-        slides[slideAtual].classList.add("ativo");
+    // Abre o menu ao clicar no ícone de lista
+    if (btnMenuAbrir && menuMobileContainer && overlayMenuBg) {
+        btnMenuAbrir.addEventListener("click", () => {
+            menuMobileContainer.classList.add("abrir-menu");
+            overlayMenuBg.style.display = "block";
+        });
     }
 
-    // Altera o slide automaticamente a cada 4 segundos (4000ms)
-    setInterval(proximoSlide, 4000);
+    // Função interna para fechar o menu mobile
+    function fecharMenu() {
+        if (menuMobileContainer && overlayMenuBg) {
+            menuMobileContainer.classList.remove("abrir-menu");
+            overlayMenuBg.style.display = "none";
+        }
+    }
+
+    // Fecha o menu ao clicar no botão de fechar (X) ou no fundo escuro (overlay)
+    if (btnMenuFechar) btnMenuFechar.addEventListener("click", fecharMenu);
+    if (overlayMenuBg) overlayMenuBg.addEventListener("click", fecharMenu);
 
 
     /* ==========================================================================
-       FUNCIONALIDADE 2: CALCULADORA ECOLÓGICA
+       2. LÓGICA DA CALCULADORA ECOLOGICA DE CO₂ (MANIPULAÇÃO DO DOM)
        ========================================================================== */
     const btnCalcular = document.getElementById("btn-calcular");
-    const inputHectares = document.getElementById("hectares");
-    const boxResultado = document.getElementById("resultado-calculo");
+    const inputCombustivel = document.getElementById("combustivel");
+    const divResultado = document.getElementById("resultado");
 
-    btnCalcular.addEventListener("click", () => {
-        const hectares = parseFloat(inputHectares.value);
+    if (btnCalcular && inputCombustivel && divResultado) {
+        btnCalcular.addEventListener("click", () => {
+            const litrosDiesel = parseFloat(inputCombustivel.value);
 
-        // Validação simples para garantir que o usuário digitou um número válido
-        if (isNaN(hectares) || hectares <= 0) {
-            alert("Por favor, digite um número de hectares válido maior que zero.");
-            return;
-        }
+            // Validação simples do campo numérico para evitar dados incorretos
+            if (isNaN(litrosDiesel) || litrosDiesel < 0) {
+                alert("Por favor, digite uma quantidade de litros válida igual ou maior que zero.");
+                return;
+            }
 
-        // Fatores de cálculo hipotéticos para sustentabilidade em 2026
-        const litrosEconomizadosAgua = hectares * 12000; 
-        const kgReducaoCO2 = hectares * 340;
+            // Fatores matemáticos estáveis: 1 litro de diesel emite aprox. 2.6 kg de CO2
+            // Otimizações agrícolas com tecnologia podem economizar até 15% desse valor
+            const totalCO2Emitido = litrosDiesel * 2.6;
+            const co2EconomizadoAnual = totalCO2Emitido * 0.15;
 
-        // Atualiza a tela com os resultados formatados
-        document.getElementById("res-agua").innerText = litrosEconomizadosAgua.toLocaleString("pt-BR");
-        document.getElementById("res-co2").innerText = kgReducaoCO2.toLocaleString("pt-BR");
+            // Altera o texto dos elementos HTML com os resultados calculados
+            document.getElementById("co2-emitido").innerText = totalCO2Emitido.toFixed(1);
+            document.getElementById("co2-economizado").innerText = co2EconomizadoAnual.toFixed(1);
 
-        // Torna a caixa de resultados visível removendo a classe 'escondido'
-        boxResultado.classList.remove("escondido");
-    });
-
-
-    /* ==========================================================================
-       FUNCIONALIDADE 3: GALERIA DE IMAGENS COM LIGHTBOX (EXPANSÃO)
-       ========================================================================== */
-    const imagensGaleria = document.querySelectorAll(".img-galeria");
-    const lightbox = document.getElementById("lightbox");
-    const imgAmpliada = document.getElementById("img-ampliada");
-    const fecharLightbox = document.getElementById("fechar-lightbox");
-
-    imagensGaleria.forEach(img => {
-        img.addEventListener("click", () => {
-            // Define o link da imagem clicada na imagem do modal do Lightbox
-            imgAmpliada.src = img.src;
-            imgAmpliada.alt = img.alt;
-            lightbox.classList.remove("escondido");
+            // Torna o bloco de resposta visível ao usuário
+            divResultado.classList.remove("escondido");
         });
-    });
-
-    // Fecha o lightbox ao clicar no 'X'
-    fecharLightbox.addEventListener("click", () => {
-        lightbox.classList.add("escondido");
-    });
-
-    // Fecha o lightbox caso o usuário clique fora da imagem
-    lightbox.addEventListener("click", (e) => {
-        if (e.target === lightbox) {
-            lightbox.classList.add("escondido");
-        }
-    });
+    }
 
 
     /* ==========================================================================
-       FUNCIONALIDADE 4: CADASTRO COM VALIDAÇÃO
-       ========================================================================== */
-    const formCadastro = document.getElementById("form-cadastro");
-    const msgSucesso = document.getElementById("msg-sucesso");
-
-    formCadastro.addEventListener("submit", (e) => {
-        // Impede o envio real do formulário para tratar com JS
-        e.preventDefault();
-
-        // Pega os dados apenas para simular o processo
-        const nome = document.getElementById("nome").value;
-
-        if (nome.trim().length < 3) {
-            alert("Por favor, insira um nome válido.");
-            return;
-        }
-
-        // Exibe mensagem de sucesso e limpa o formulário
-        msgSucesso.classList.remove("escondido");
-        formCadastro.reset();
-
-        // Oculta a mensagem de sucesso após 4 segundos
-        setTimeout(() => {
-            msgSucesso.classList.add("escondido");
-        }, 4000);
-    });
-
-
-    /* ==========================================================================
-       FUNCIONALIDADE 5: ÁREA DE NOTÍCIAS COM FILTROS DINÂMICOS
-       ========================================================================== */
-    const botoesFiltro = document.querySelectorAll(".btn-filtro");
-    const cardsNoticias = document.querySelectorAll(".noticia-card");
-
-    botoesFiltro.forEach(botao => {
-        botao.addEventListener("click", () => {
-            // Remove classe ativa de todos os botões e adiciona ao clicado
-            botoesFiltro.forEach(b => b.classList.remove("ativo"));
-            botao.classList.add("ativo");
-
-            const filtroEscolhido = botao.getAttribute("data-filtro");
-
-            cardsNoticias.forEach(card => {
-                const categoriaCard = card.getAttribute("data-categoria");
-
-                // Regra de exibição: Se for 'todos' ou a categoria bater, exibe. Se não, esconde.
-                if (filtroEscolhido === "todos" || filtroEscolhido === "categoriaCard" || filtroEscolhido === categoriaCard) {
-                    card.classList.remove("escondido");
-                } else {
-                    card.classList.add("escondido");
-                }
-            });
-        });
-    });
-
-
-    /* ==========================================================================
-       RECURSOS DE ACESSIBILIDADE: ALTO CONTRASTE E DISLEXIA
+       3. RECURSO DE ACESSIBILIDADE: ALTO CONTRASTE (PONTUAÇÃO MÁXIMA NIVEL 4)
        ========================================================================== */
     const btnAltoContraste = document.getElementById("btn-alto-contraste");
-    const btnDislexia = document.getElementById("btn-dislexia");
 
-    // Liga/Desliga a classe de Alto Contraste no elemento raiz (HTML)
-    btnAltoContraste.addEventListener("click", () => {
-        document.documentElement.classList.toggle("alto-contraste");
-    });
-
-    // Liga/Desliga a classe com espaçamento para Dislexia no corpo inteiro (body)
-    btnDislexia.addEventListener("click", () => {
-        document.body.classList.toggle("fonte-dislexia");
-    });
+    if (btnAltoContraste) {
+        btnAltoContraste.addEventListener("click", () => {
+            // Alterna a classe no elemento principal do documento (:root/html)
+            document.documentElement.classList.toggle("alto-contraste");
+        });
+    }
 
 });
